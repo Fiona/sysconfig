@@ -1,0 +1,884 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename php-mode.info
+@settitle PHP Mode Manual
+@set version 1.4.0
+@c %**end of header
+@copying
+This manual documents PHP mode version @value{version} for
+use with GNU Emacs.
+
+Copyright @copyright{} 2008  Aaron S. Hawley
+
+@quotation
+Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation
+License, Version 1.2 or any later version published by the
+Free Software Foundation; with no Invariant Sections, and no
+Cover Texts.  A copy of the license is included in the
+section entitled ``Copying This Manual.''
+
+A copy of the license is also available from the Free
+Software Foundation Web site at
+@url{http://www.gnu.org/licenses/fdl.html}.
+
+@end quotation
+
+The document was typeset with
+@uref{http://www.texinfo.org/, GNU Texinfo}.
+
+$Date: 2008-01-03 20:50:20 -0500 (Thu, 03 Jan 2008) $
+
+$Revision: 30 $
+
+@end copying
+
+@titlepage
+@title PHP Mode Manual
+@subtitle Editing PHP in GNU Emacs
+@author Aaron S. Hawley <aaronh@@localhost.localdomain>
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c Output the table of the contents at the beginning.
+@contents
+
+@ifnottex
+@node Top
+@top PHP Mode Manual
+
+@insertcopying
+@end ifnottex
+
+@c Generate the nodes for this menu with `C-c C-u C-m'.
+@menu
+* Introduction::                
+* Electricity::                 
+* Motion::                      
+* Indentation::                 
+* Editing::                     
+* Completion::                  
+* PHP Comments::                
+* PHP Documentation::           
+* Index Menu::                  
+* Change Logs::                 
+* Speedbar::                    
+* Customization::               
+* Embedded HTML::               
+* Contributors::                
+* Copying This Manual::         
+* Concept Index::               
+* Function Index::              
+* Keyboard Index::              
+* Variable Index::              
+@end menu
+
+@c Update all node entries with `C-c C-u C-n'.
+@c Insert new nodes with `C-c C-c n'.
+@node Introduction
+@chapter Introduction
+
+@cindex C mode
+@cindex features
+@cindex PEAR
+@cindex PHP versions
+@cindex syntax highlighting
+@cindex version, PHP
+PHP mode is a major mode for editing PHP source code in
+Emacs.  As an extension of Emacs's C mode, it inherits all C
+mode's navigation and editing functionality.  Syntax
+elements of PHP source code is colored according to the
+grammar of PHP versions 3, 4 and 5.  By default, the indent
+rules follow the PHP PEAR coding guidelines.  Additional
+aids for developing in PHP include documentation search of
+the PHP manual, code completion and a class browser.
+
+@cindex version, PHP mode
+@findex php-mode-version
+To find out what version of PHP mode you have installed run
+@kbd{M-x php-mode-version}.
+
+PHP mode was first released in 1999 and was written by
+Turadg Aleahmad.  At the time of PHP mode's initial release,
+version 2 of PHP (PHP/FI) was only 2 years old and the
+release of PHP 3 had happened the year before.  In May of
+2000, PHP 4 was released.  Subsequent versions of PHP mode
+scurried to support the quickly evolving syntax of this
+emerging programming language.
+
+In 2001, PHP mode became a SourceForge project and version
+1.0 was released later that year.  Further refinements of
+the Emacs library included improvements to the syntax
+coloring rules, portability between XEmacs and GNU Emacs,
+integration of various development tools available in
+various Emacsen.
+
+PHP mode's support for PHP 5 first appeared in 2004, the
+same year PHP 5 was released.  2004 was the last year
+Aleahmad made a release.  In 2005, Lennart Borgman combined
+a forked version of PHP mode with his ``new XML mode for
+Emacs'' (nXhtml).  The stalled development of PHP resulted
+in people sharing various patches and improvements to PHP
+mode over the Internet.
+
+The 1.4 release in 2008 represented a renewed commitment to
+the Emacs Lisp library with the addition of considerable
+updates and improvements -- the first in over 2 years.
+
+@c In 2007, Aaron S. Hawley offered to update and maintain
+@c PHP mode.  PHP mode's files were moved from CVS to a
+@c Subversion code repository.  A release appeared in 2008
+@c with a number of improvements and updates to support
+@c newer versions of CC mode and Emacs that were finally
+@c released in 2007.  PHP mode shipped with a 16 page
+@c Texinfo manual authored by Hawley.
+
+@node Electricity
+@chapter Electricity
+
+@cindex electricity
+@findex self-insert-command
+Certain characters when inserted in Emacs have
+@dfn{electricity}.  Emacs recognizes them as ``electric''
+and automatically reacts in some way to their insertion.
+This is unlike the @code{self-insert-command} -- the
+conventional manner most characters are inserted into the
+buffer with no side-effect.
+
+@cindex indentation, electric
+@cindex electric indentation
+@cindex declaration blocks
+@cindex conditional statements
+@cindex braces
+@cindex comments
+@kindex TAB
+For example, the indent commands for programming language
+modes -- including PHP mode -- are electric.  Hitting
+@kbd{TAB} (or @kbd{C-i}) typically indents the line to the
+correct column based on the nested declaration blocks or
+conditional (control) syntax statements.  Other examples of
+electric characters include braces (@{ and @}), characters
+that are recognized as comments (#, / and *), and
+semicolons.  Inserting ``electric'' characters causes the
+line to be automatically be indented appropriately by PHP
+mode.
+
+@findex quoted-insert
+@kindex C-q
+@findex c-toggle-electric-state
+@kindex C-c C-l
+Should PHP mode ever do something you wish it didn't, like
+indenting incorrectly after inserting a character when you
+wish it didn't, then you've been @dfn{electrocuted}.  To
+avoid this, use @code{quoted-insert} by prefixing the
+character with @kbd{C-q}.  For example, @kbd{C-q TAB} for a
+tab.  Alternatively, disable the electric effect of PHP mode
+with @kbd{C-c C-l}.  Issue @kbd{C-c C-l} again to activate
+the electric effect again.
+
+@c Is there a setting to use in ones .emacs to permanently
+@c shut off electricity?
+
+@node Motion
+@chapter Motion
+
+@cindex motion
+@cindex movement
+@cindex point
+The traditional commands for Emacs@footnote{@xref{Moving
+Point, Changing the Location of Point, Changing the Location
+of Point, emacs, GNU Emacs Manual}.} and Emacs's C
+mode@footnote{@xref{Movement Commands, Movement Commands,
+Movement Commands, ccmode, CC Mode Manual}.} are supported in
+PHP mode.  The following commands are notable to mention for
+working with PHP or are extensions expressly provided PHP
+mode.
+
+@table @kbd
+
+@cindex block
+@cindex braces
+@cindex parentheses
+@cindex string
+@cindex statements
+@cindex syntax, forward
+@findex forward-sexp
+@kindex C-M-f
+@item C-M-f
+Move forward past the current syntax (@code{forward-sexp}).
+If point is in a string literal, move to the end of the
+string.  If point is at the beginning of a parenthetical
+expression, move to the end of it.  If at the beginning of
+statement block that is surrounded by braces, move to the
+end of the block.  If point is at an identifier, skip to the
+end of it.
+@cindex syntax, backward
+@findex backward-sexp
+@kindex C-M-b
+@item C-M-b
+Same as @kbd{C-M-f}, except a syntactic element move to its
+beginning (@code{backward-sexp}).
+@cindex beginning of function
+@cindex function, beginning of
+@findex c-beginning-of-defun
+@kindex C-M-a
+@item C-M-a
+Move point to the beginning of the top-level function
+definition (@code{c-beginning-of-defun}).
+@cindex end of function
+@cindex function, end of
+@findex c-end-of-defun
+@kindex C-M-e
+@item C-M-e
+Move point to the end of the top-level function definition
+(@code{c-end-of-defun}).
+@cindex end of function
+@cindex function, end of
+@findex beginning-of-defun
+@kindex C-M-<HOME>
+@item C-M-<HOME>
+Move point to the beginning of the current function
+(@code{beginning-of-defun}).
+@cindex end of function
+@cindex function, end of
+@findex end-of-defun
+@kindex C-M-<END>
+@item C-M-<END>
+Move point to the end of the current function
+(@code{end-of-defun}).
+@cindex indentation, move to
+@findex back-to-indentation
+@kindex M-m
+@item M-m
+Move to the indentation at the beginning of the line
+(@code{back-to-indentation}).
+@cindex bumpy case
+@cindex camel case
+@cindex mixed case
+@cindex case, mixed
+@cindex function, end of
+@findex backward-word
+@findex forward-word
+@findex c-subword-mode
+@kindex C-c C-w
+@item C-c C-w
+Enable word motion across mixed case identifiers with
+@code{forward-word} and @code{backward-word} commands
+(@code{c-subword-mode}).
+@end table
+@cindex universal argument
+@cindex numeric argument
+@findex universal-argument
+@kindex C-u
+Most movement commands support prefixing the command with a
+@dfn{numeric argument} by using Emacs's @dfn{universal
+argument} command.  Type @kbd{C-u @var{n}}, where @var{n} is
+the number of times to repeat a command.  If no number
+@var{n} is provided, Emacs will repeat the command 4 times
+by default.  @xref{Arguments, Numeric Arguments, Numeric
+Arguments, emacs, GNU Emacs Manual}.
+
+@node Indentation
+@chapter Indentation
+
+@cindex indentation
+@cindex PEAR
+@cindex spaces
+@cindex tabs
+PHP mode's indentation settings follow the PHP PEAR ``Coding
+Standards''@footnote{@url{http://pear.php.net/manual/en/standards.php}}.
+This has the consequence in PHP mode of making the
+indentation commands use four spaces, and not tabs.
+
+@cindex HTML
+PHP does not appropriately indent HTML tags.  @xref{Embedded
+HTML}.
+
+To customize PHP mode's indentation rules, change the
+following variables.
+
+@table @code
+
+@cindex indentation level
+@vindex c-basic-offset
+@item c-basic-offset
+This style variable of CC mode controls how many columns in
+the level of indentation.  By default this is 4 spaces in
+PHP mode (and in CC mode).
+@vindex indent-tabs-mode
+@item indent-tabs-mode
+Variable of Emacs that determines whether indentation
+commands should insert the tab character or insert the
+equivalent number of space characters.  In PHP mode, this is
+set to to nil by default.
+@vindex tab-width
+@item tab-width
+This variable of Emacs determines how ``wide'' a tab in the
+buffer should be considered.  This is also traditionally
+described as setting the distance between ``tab stops''.  By
+default, tabs are not inserted by PHP mode.
+
+@end table
+
+The usual commands for indenting in
+Emacs@footnote{@xref{Indentation Commands, Indentation
+Commands, Indentation Commands, emacs, GNU Emacs Manual}.}
+and Emacs's C mode@footnote{@xref{Indentation Commands,
+Indentation Commands, Indentation Commands, ccmode, CC Mode
+Manual}.}: are supported in PHP mode, following the
+indentation rules of PHP.
+
+@table @kbd
+
+@cindex tab
+@cindex indent line
+@cindex line, indent
+@findex c-indent-command
+@kindex TAB
+@item TAB
+Properly indent current line, even from the middle of the
+line (@code{c-indent-command}).
+@c provide examples? -- ash 2007-12-29
+@cindex newline
+@cindex indent newline
+@cindex indent newline
+@findex newline-and-indent
+@kindex C-j
+@item C-j
+Insert text after point to a newline, and properly indent
+the newline (@code{c-indent-command}).
+@cindex indent region
+@cindex region, indent
+@findex indent-region
+@kindex C-M-\
+@item C-M-\
+Properly indent each line of region (@code{indent-region}).
+@c I'm not going to bother mentioning C-x TAB,
+@c M-x indent-rigidly. -- ash 2007-12-29
+@cindex function, indent
+@cindex indent function
+@cindex class, indent
+@cindex indent class
+@findex c-indent-defun
+@kindex C-c C-q
+@item C-c C-q
+Properly indent each line of current top-level function or
+top-level class (@code{c-indent-defun}).
+@end table
+
+@node Editing
+@chapter Editing
+
+@table @kbd
+
+@cindex paragraph, fill
+@cindex filling
+@cindex indentation, filling
+@cindex filling indentation
+@cindex filling comment
+@cindex comment, filling
+@cindex Docblock comment
+@cindex comment, Docblock
+@findex c-fill-paragraph
+@kindex M-q
+@item M-q
+Fill the paragraph to current value of @code{fill-column}.
+The command does the right thing for indented code and PHP
+comments including Docblock comments.
+@cindex column, fill
+@cindex fill column
+@cindex fill-column
+@findex set-fill-column
+@findex fill-paragraph
+@kindex C-x f
+@item C-u @var{n} C-x f
+Set the @code{fill-column} to @var{n} when using the @kbd{M-q}
+command (@code{fill-paragraph}).
+@cindex function, mark
+@findex kill-region
+@findex kill-ring-save
+@findex indent-region
+@findex indent-rigidly
+@findex c-mark-function
+@kindex C-M-h
+@kindex C-w
+@kindex M-w
+@kindex C-M-\
+@item C-M-h
+Mark the current function (@code{c-mark-function}).  Puts
+the mark at the end and of the function and the point at the
+beginning.  Useful if you want to kill the region with
+@kbd{C-w} or @kbd{M-w}, or indent the region with
+@kbd{C-M-\} or @kbd{C-x TAB} (@xref{Indentation}.).
+
+@end table
+
+@node Completion
+@chapter Completion
+
+@cindex completion
+Completing function names, identifiers and keywords in PHP
+is possible in PHP mode.  In PHP mode, it is possible to
+complete identifiers defined by PHP programming language,
+and functions defined by you.
+
+@cindex customization, PHP manual path
+@cindex PHP manual path
+@vindex php-manual-path
+@cindex .emacs, php-manual-path
+@findex customize-variable
+For PHP mode to know the functions of keywords of PHP, it
+must have access to the PHP manual.  Download the HTML
+archive of the manual made of separate files for each
+function.@footnote{@uref{http://www.php.net/download-docs.php}}
+Unpack the files to a directory, and define the variable
+@var{php-manual-path} to the location of these files.
+Configure this setting with either @kbd{M-x
+customize-variable RET php-manual-path RET}, or by setting
+the value in your Emacs initialization file
+(@file{~/.emacs}).  The PHP function names
+
+@cindex etags
+@cindex tag file
+@cindex Makefile
+For functions and classes you define, you'll need to provide
+them to Emacs as a @dfn{tag file}.@footnote{@xref{Tags, Tags
+Tables, Tags Tables, emacs, GNU Emacs Manual}.} Creating a
+tag file (@file{TAGS}) from a PHP source code file is done
+by running the @command{etags} command on the
+file.@footnote{@xref{Create Tags Table, Creating Tags
+Tables, Creating Tags Tables, emacs, GNU Emacs Manual}.} The
+@command{etags} command can even generate tag files for
+providing completion across multiple files.  For larger
+projects and PHP coded libraries, use a system like a
+Makefile to generate and maintain the tag tables.
+
+@cindex etags, running
+Run,
+
+@example
+etags @var{file}
+@end example
+
+to create a tags file for @var{file}.
+
+To generate a tag file for all the PHP files in the current
+directory, run
+
+@example
+etags *.php
+@end example
+
+To enable a tags file you need to use the following command.
+
+@table @kbd
+
+@cindex tag
+@findex visit-tags-table
+@item C-u M-x visit-tags-table
+Specify the @file{TAGS} file that PHP mode should use to
+find completion candidates for the current buffer.
+
+@item M-x visit-tags-table
+Specify the @file{TAGS} file that PHP mode should use to
+find completion candidates for all buffers, and even other
+modes other than PHP mode.
+
+@end table
+
+@cindex customization, PHP completion file
+@cindex PHP completion file
+@vindex php-completion-file
+@cindex .emacs, php-completion-file
+@findex customize-variable
+To avoid either 
+
+@enumerate
+@item
+avoid regenerating the completion table from the PHP manual
+every Emacs session,
+@item
+to generate a completion file from a facility external to
+Emacs tags,
+@item
+or to provide more granular control over the completion
+rules for files;
+
+@end enumerate
+
+consider using the variable @code{php-completion-file}.
+
+Configure this setting with either @kbd{M-x
+customize-variable RET php-completion-file RET}, or by
+setting the value in your Emacs initialization file
+(@file{~/.emacs}).
+
+For larger projects or because of other specific needs,
+conventional ways of setting these and other variables may
+be inadequate.  As of 2008, third-party packages do exist
+for Emacs to configure Emacs settings on groups of files or
+for directory trees, including @file{dirvars.el}.
+
+@table @kbd
+
+@cindex complete function
+@cindex function, complete 
+@findex php-complete-function
+@kindex M-TAB
+@kindex ESC TAB
+@kindex C-[ TAB
+@item M-TAB
+@item ESC TAB
+@item C-[ TAB
+Complete function name at point (@code{php-complete-function}).
+@cindex argument list, function
+@cindex function argument list
+@cindex minibuffer
+@findex php-show-arglist
+@kindex C-.
+@item C-.
+Show in the minibuffer the argument list for the current
+function at point (@code{php-show-arglist}).  The argument
+list is generated by finding and jumping to the respective
+function's location specified in the tag file (see above).
+The argument list is then read and printed to the
+minibuffer.
+@end table
+
+@node PHP Comments
+@chapter PHP Comments
+
+@cindex comment
+The usual commands for inserting, managing and editing
+source code comments in Emacs Emacs@footnote{@xref{Comments,
+Manipulating Comments,Manipulating Comments, emacs, GNU
+Emacs Manual}.}  and Emacs's C mode@footnote{@xref{Comment
+Commands, Comment Commands, Comment Commands, ccmode, CC
+Mode Manual}.}: are supported in PHP mode.  The following
+commands are notable to mention for working with PHP and are
+expressly provided for PHP mode.
+
+@table @kbd
+
+@cindex comment, insert
+@cindex indent comment
+@cindex insert comment
+@cindex comment, indent
+@findex comment-indent
+@findex comment-dwim
+@kindex M-;
+@item M-;
+Insert comment at point (@code{comment-dwim}).  If comment
+already exist, indent comment (@code{comment-indent}).
+@kindex M-x comment-indent
+@cindex newline, comment
+@cindex comment newline
+@findex c-indent-new-comment-line
+@kindex M-j
+@item M-j
+Insert a newline in a comment on the next line with the
+comment starting at the same place as the current line
+(@code{c-indent-new-comment-line}).
+@cindex column, comment
+@cindex comment column
+@vindex comment-column
+@findex comment-set-column
+@kindex C-x ;
+@item C-x ;
+Set the current column as the column to start comments from
+in the buffer (@code{comment-set-column}).  This affects the
+variable @code{comment-column}.
+@cindex comment region
+@cindex region, comment
+@findex comment-region
+@kindex C-c C-c
+@item C-c C-c
+Comment out the current region (@code{comment-region}).  If
+region is already commented, the region is uncommented.
+@c I'm not going to bother mentioning the numeric prefix
+@c argument variations. -- ash 2008-01-01
+@cindex comment, kill
+@cindex kill comment
+@findex comment-dwim
+@findex comment-set-column
+@findex comment-kill
+@kindex M-- C-x ;
+@item M-- C-x ;
+@item C-u M-;
+Kill the comment on the current line (@code{comment-kill}
+called by @code{comment-set-column} or @code{comment-dwim}).
+@item C-u @var{n} M-;
+Kill the next @var{n} comments (@code{comment-dwim}).
+@cindex region, comment box
+@cindex comment box
+@findex comment-box
+@kindex M-x comment-box
+@item M-x comment-box
+Surround region with comment characters.
+
+@end table
+
+@node PHP Documentation
+@chapter PHP Documentation
+
+@cindex customization, browse-url
+@cindex documentation, PHP
+@cindex PHP documentation
+@findex browse-url
+@findex customize-group
+PHP mode supports the online documentation available from
+@uref{http://www.php.net/}.  These commands are handled by
+@code{browse-url}.  Run the Emacs command @kbd{M-x
+customize-group RET browse-url RET} to configure how
+@code{browse-url} behaves.
+
+@table @kbd
+
+@cindex browse PHP manual
+@findex php-browse-manual
+@kindex C-c C-m
+@kindex C-c RET
+@item C-c C-m
+@item C-c RET
+Browse PHP manual in a Web browser.
+@cindex search PHP manual
+@findex php-search-documentation
+@kindex C-c C-f
+@item C-c C-f
+Search PHP manual using identifier at point.
+
+@end table
+
+@node Index Menu
+@chapter Index Menu
+
+@cindex index menu
+@cindex menu, index
+@cindex index, class
+@cindex index, function
+@cindex class index
+@cindex function index
+PHP mode provides a menu of the functions and classes
+defined in the current buffer.  The menu is pretty simple,
+but is helpful when navigating large files.  The contents of
+the menu also provide a good overview to the user about the
+file's contents.
+
+To enable this menu, run the following command.
+
+@table @kbd
+
+@cindex menu bar
+@findex imenu-add-menubar-index
+@item M-x imenu-add-menubar-index
+Scan the file for functions and class declarations, then add
+a menu item called ``Index'' to the menu bar.
+
+@end table
+
+In the menu are any one or more of the following menu items.
+
+@table @samp
+
+@findex imenu
+@item Functions
+A sub-menu containing the names of functions defined in the
+current buffer.  Clicking on a function name will visit the
+location of the function's definition.
+@findex imenu
+@item Classes
+A sub-menu containing the names of classes defined in the
+current buffer.  Clicking on a class name will visit the
+location of the class's definition.
+@findex imenu-update-menubar
+@cindex rescan
+@item *Rescan*
+Rescan the contents of the current buffer, and update both
+the indexes the entries in the menu.
+
+@end table
+
+@cindex customization, Imenu auto rescan
+@cindex rescan, automatically
+@cindex .emacs, imenu-auto-rescan
+@vindex imenu-auto-rescan
+@findex customize-variable
+To have Emacs automatically rescan the current buffer,
+change the setting for @code{imenu-auto-rescan} to non-nil
+with either @kbd{M-x customize-variable RET
+php-completion-file RET}, or by setting the value in your
+Emacs initialization file (@file{~/.emacs}).
+
+@node Change Logs
+@chapter Change Logs
+
+PHP mode can help generate @file{ChangeLog} files, a
+widely-adopted format for documenting the changes made to
+source code, especially software.  PHP mode and Emacs will
+determine the current function, file name, author
+information and date and use it all to prepare a properly
+formatted entry for the file.
+
+The @code{add-change-log-entry} commands can be run from
+within a buffer containing a PHP buffer, or from a buffer in
+Diff mode with a revision patch to a PHP source file.
+@xref{Diff Mode, Diff Mode, Diff Mode, emacs, GNU Emacs
+Manual}.
+
+@table @kbd
+
+@item C-x 4 a
+Add an entry in a ChangeLog file opened in another window,
+or add a new line to the already begun entry
+(@code{add-change-log-entry-other-window}).  Provides the
+file name and the respective function name, when applicable,
+for the current point
+
+@end table
+
+@node Speedbar
+@chapter Speedbar
+
+FIXME: Document speedbar support for PHP mode.
+
+@node Customization
+@chapter Customization
+
+@cindex customization
+@cindex .emacs
+@cindex initialization file
+Customization for PHP mode can be done using Emacs's
+Customize feature@footnote{@xref{Customization,
+Customization, Customization, emacs, GNU Emacs Manual}.}, or
+by adding bits of Emacs Lisp to your Emacs initialization
+file (@file{~/.emacs}).
+
+@table @kbd
+@findex customize-group
+@item M-x customize-group RET php RET
+Start a @samp{*Customize*} buffer with the customizable
+settings for PHP mode.
+
+@end table
+
+@node Embedded HTML
+@appendix Embedded HTML
+
+@cindex markup formats
+@cindex XML
+@cindex SGML
+@cindex embedded code
+@cindex indentation
+@cindex HTML
+@findex php-mode
+@kindex M-x php-mode
+The PHP programming language is commonly embedded with HTML
+but also with other markup formats.  Unfortunately, PHP mode
+is currently unable to recognize these other bits and
+provide commands that behave appropriately.  Other modes for
+Emacs for properly indenting are available, including HTML
+mode, SGML mode and XML mode.
+
+@findex html-mode
+@findex php-mode
+For example, when editing the HTML sections found in a PHP
+file, consider turning on HTML mode with @kbd{M-x
+html-mode}.  Use the the mode-specific commands for
+manipulating the HTML.  When finished, turn back on PHP mode
+with @kbd{M-x php-mode} to return working on the PHP sections
+of the file.
+
+@cindex multiple major mode
+@cindex mumamo
+@cindex mmm-mode
+@cindex multi-mode
+Alternatively, consider using a @dfn{multiple major mode}
+like mumamo, mmm-mode or multi-mode.  These modes allow a
+single buffer to appoint different major modes to respective
+portions of the buffer.
+
+@node Contributors
+@appendix Contributors
+
+@itemize
+@item Juanjo
+@item Torsten Martinsen
+@item Vinai Kopp
+@item Sean Champ
+@item Doug Marcey
+@item Kevin Blake
+@item Rex McMaster
+@item Mathias Meyer
+@item Boris Folgmann
+@item Roland Rosenfeld
+@item Fred Yankowski
+@item Craig Andrews
+@item John Keller
+@item Ryan Sammartino
+@item ppercot
+@item Valentin Funk
+@item Stig Bakken
+@item Gregory Stark
+@item Chris Morris
+@item Nils Rennebarth
+@item Gerrit Riessen
+@item Eric Mc Sween
+@item Ville Skytta
+@item Giacomo Tesio
+@item Lennart Borgman
+@item Stefan Monnier
+@item Aaron S. Hawley
+@end itemize
+
+@node Copying This Manual
+@appendix Copying This Manual
+
+@c Get fdl.texi from http://www.gnu.org/licenses/fdl.html
+@include fdl.texi
+
+@node Concept Index
+@unnumbered Concept Index
+
+@printindex cp
+
+@node Function Index
+@unnumbered Function Index
+
+@printindex fn
+
+@node Keyboard Index
+@unnumbered Keyboard Index
+
+@printindex ky
+
+@node Variable Index
+@unnumbered Variable Index
+
+@printindex vr
+
+@bye
+
+@c Local Variables: **
+@c mode: auto-fill **
+@c fill-column: 60 **
+@c End: **
+@c php-mode.texi ends here
+
+@c  LocalWords: texinfo setfilename php settitle url uref
+@c  LocalWords: Docblock titlepage vskip pt FI filll
+@c  LocalWords: insertcopying ifnottex HTML cindex findex
+@c  LocalWords: kbd dfn kindex pxref ccmode var xref sexp
+@c  LocalWords: defun subword CC ChangeLog Diff XML SGML
+@c  LocalWords: html mumamo mmm Juanjo Torsten Martinsen
+@c  LocalWords: Vinai Kopp Stig Marcey McMaster Folgmann
+@c  LocalWords: Rosenfeld Yankowski Sammartino Bakken
+@c  LocalWords: ppercot Rennebarth Gerrit Riessen Mc Sween
+@c  LocalWords: Skytta Tesio fdl cp Lennart Borgman Monnier
+@c  LocalWords: texi printindex fn ky RET etags ESC CVS
+@c  LocalWords: imenu menubar samp Turadg Aleahmad
+@c  LocalWords: SourceForge Emacsen Hawley nXML vindex
+@c  LocalWords: dirvars arglist FIXME speedbar vr minibuffer
+@c  LocalWords: dwim nXhtml emacs makefile el uncommented
+@c  LocalWords: online multi
