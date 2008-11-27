@@ -1,4 +1,6 @@
 (add-to-list 'load-path "~/elisp")
+(add-to-list 'load-path "~/elisp/mmm-mode")
+(add-to-list 'load-path "~/elisp/icicles")
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
@@ -44,6 +46,25 @@
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.install$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.engine$" . php-mode))
+
+
+; ------------
+; Multi mode
+; ------------
+(require 'mmm-mode)
+(setq mmm-global-mode 'maybe)
+
+(mmm-add-classes
+ '((php-here-doc
+  :front "<<<\\([a-zA-Z0-9_-]+\\)"
+  :back "^~1[;]?$"
+  :save-matches 1
+  :submode html-mode
+  :delimiter-mode nil)))
+
+(add-to-list 'mmm-mode-ext-classes-alist '(php-mode nil php-here-doc))
+
+(set-face-background 'mmm-default-submode-face nil)
 
 
 ; ------------
@@ -97,6 +118,10 @@
 
 (require 'magit)
 (global-set-key (kbd "C-x C-g") 'magit-status)
+
+(require 'icicles)
+(icy-xfmode) 
+
 
 ; -------------
 ; Colour scheme
