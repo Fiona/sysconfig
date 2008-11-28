@@ -19,7 +19,16 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :family "schumacher-clean")))))
+ '(default ((t (:stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :family "schumacher-clean")))))
+
+
+; -------------
+; Colour scheme
+; -------------
+(require 'color-theme)
+(setq color-theme-is-global t)
+(color-theme-initialize)
+(color-theme-tango)
 
 
 ; ------------
@@ -102,6 +111,9 @@
 ; -----------
 ; Miscelanious settings
 ; -----------
+; Do not want start up screen
+(setq inhibit-startup-message t)
+; Tabs plz
 (setq default-tab-width 4)
 ;disable backup
 (setq backup-inhibited t)
@@ -120,38 +132,7 @@
 (global-set-key (kbd "C-x C-g") 'magit-status)
 
 (require 'icicles)
-(icy-xfmode) 
+(icy-mode) 
 
-
-; -------------
-; Colour scheme
-; -------------
-(defconst color-scheme 'dark)
-(defconst foreground-color "white")
-(defconst background-color "black")
-(defconst cursor-color "red")
-(defconst pointer-color "white")
-
-(if (featurep 'xemacs)
-    (let ((frame (selected-frame)))
-      (set-face-foreground 'default foreground-color)
-      (set-face-background 'default background-color)
-      (setq frame-background-mode color-scheme)
-      color-scheme
-      (set-frame-property frame
-                          'custom-properties
-                          (mapcar (lambda (symbol)
-                                    (if (eql symbol 'light)
-                                        'dark
-                                      symbol))
-                                  (frame-property frame
-                                                  'custom-properties))))
-  (progn 
-     (add-to-list 'default-frame-alist '(foreground-color . "white"))
-     (add-to-list 'default-frame-alist '(background-color . "black"))
-     (add-to-list 'default-frame-alist '(cursor-color . "red"))
-     (add-to-list 'default-frame-alist '(background-mode . dark))
-     (set-cursor-color cursor-color)
-     (set-mouse-color pointer-color))
-)
+(require 'dired+)
 
