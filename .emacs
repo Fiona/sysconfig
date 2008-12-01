@@ -13,12 +13,32 @@
  '(cua-mode t nil (cua-base))
  '(imenu-auto-rescan t)
  '(show-paren-mode t)
+ '(frame-background-mode (quote dark))
  '(tool-bar-mode nil))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(icicle-complete-input ((((background dark)) nil)))
+ '(icicle-completing-mustmatch-prompt-prefix ((((type x w32 mac graphic) (class color)) (:foreground "Cyan"))))
+ '(icicle-completing-prompt-prefix ((((type x w32 mac graphic) (class     color)) (:foreground "Red"))))
+ '(icicle-current-candidate-highlight ((((background dark)) (:background "gray20"))))
+ '(icicle-historical-candidate ((((background dark)) (:foreground "White"))))
+ '(icicle-prompt-suffix ((((type x w32 mac graphic) (class color) (background dark)) (:foreground "LightSlateBlue"))))
+ '(icicle-search-context-level-1 ((((background dark)) (:background     "gray20" :weight bold))))
+ '(icicle-search-context-level-2 ((((background dark)) (:background     "gray15" :weight bold))))
+ '(icicle-search-context-level-3 ((((background dark)) (:background     "gray10" :weight bold))))
+ '(icicle-search-context-level-4 ((((background dark)) (:weight bold))))
+ '(icicle-search-context-level-5 ((((background dark)) (:weight bold))))
+ '(icicle-search-context-level-6 ((((background dark)) (:weight bold))))
+ '(icicle-search-context-level-7 ((((background dark)) (:weight bold))))
+ '(icicle-search-context-level-8 ((((background dark)) (:weight bold))))
+ '(icicle-search-current-input ((t (:foreground "green"))))
+ '(icicle-search-main-regexp-current ((((background dark)) (:foreground "DodgerBlue"))))
+ '(icicle-search-main-regexp-others ((((background dark)) (:foreground  "SeaGreenk"))))
+ '(icicle-special-candidate ((((background dark)) (:foreground "yellow"))))
+ '(icicle-whitespace-highlight ((t (:background "#300"))))
  '(default ((t (:stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :family "schumacher-clean")))))
 
 
