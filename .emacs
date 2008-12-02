@@ -2,6 +2,12 @@
 (add-to-list 'load-path "~/elisp/mmm-mode")
 (add-to-list 'load-path "~/elisp/icicles")
 
+
+
+; ------------------------------------------------------------------------------------
+; ---------------------- FACES AND COLOURS -------------------------------------------
+; ------------------------------------------------------------------------------------
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -20,7 +26,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(icicle-complete-input ((((background dark)) nil)))
+ '(icicle-complete-input ((((background dark)) :background "black")))
  '(icicle-completing-mustmatch-prompt-prefix ((((type x w32 mac graphic) (class color)) (:foreground "Cyan"))))
  '(icicle-completing-prompt-prefix ((((type x w32 mac graphic) (class     color)) (:foreground "Red"))))
  '(icicle-current-candidate-highlight ((((background dark)) (:background "gray20"))))
@@ -35,11 +41,21 @@
  '(icicle-search-context-level-7 ((((background dark)) (:weight bold))))
  '(icicle-search-context-level-8 ((((background dark)) (:weight bold))))
  '(icicle-search-current-input ((t (:foreground "green"))))
- '(icicle-search-main-regexp-current ((((background dark)) (:foreground "DodgerBlue"))))
- '(icicle-search-main-regexp-others ((((background dark)) (:foreground  "SeaGreenk"))))
+ '(icicle-search-main-regexp-others ((((background dark)) (:foreground  "SeaGreen"))))
  '(icicle-special-candidate ((((background dark)) (:foreground "yellow"))))
  '(icicle-whitespace-highlight ((t (:background "#300"))))
+ '(diredp-date-time ((t (:foreground "gray60"))))
+ '(diredp-dir-heading ((t (:background "#1e1e1e" :foreground "white" :bold t :weight bold))))
+ '(diredp-dir-priv ((t (:background "#1e1e1e" :foreground "gray60" :bold t :weight bold))))
+ '(diredp-file-name ((t (:foreground "white"))))
+ '(diredp-file-suffix ((t (:foreground "gray80"))))
+ '(diredp-flag-mark-line ((t (:foreground "#fcc" :bold t :weight bold))))
+ '(diredp-read-priv ((t (:background "#1e1e1e" :foreground "Red"))))
+ '(diredp-write-priv ((t (:background "#1e1e1e" :foreground "Green"))))
+ '(diredp-exec-priv ((t (:background "#1e1e1e" :foreground "Yellow"))))
+ '(diredp-no-priv ((t (:background "#1e1e1e" :foreground "White"))))
  '(default ((t (:stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :family "schumacher-clean")))))
+
 
 
 ; -------------
@@ -50,6 +66,11 @@
 (color-theme-initialize)
 (color-theme-tango)
 
+
+
+; ------------------------------------------------------------------------------------
+; ---------------------- MODE CONFIGURATION ------------------------------------------
+; ------------------------------------------------------------------------------------
 
 ; ------------
 ; PHP mode
@@ -83,6 +104,7 @@
 (require 'mmm-mode)
 (setq mmm-global-mode 'maybe)
 
+; Set up PHP Heredocs to be HTML highlighted
 (mmm-add-classes
  '((php-here-doc
   :front "<<<\\([a-zA-Z0-9_-]+\\)"
@@ -92,7 +114,6 @@
   :delimiter-mode nil)))
 
 (add-to-list 'mmm-mode-ext-classes-alist '(php-mode nil php-here-doc))
-
 (set-face-background 'mmm-default-submode-face nil)
 
 
@@ -111,6 +132,10 @@
 
 
 
+; ------------------------------------------------------------------------------------
+; ---------------------- EDITOR ADDITIONS --------------------------------------------
+; ------------------------------------------------------------------------------------
+
 ; ------------
 ; YASnippet
 ; ------------
@@ -128,28 +153,33 @@
 (cua-mode t)
 
 
-; -----------
-; Miscelanious settings
-; -----------
+
+; ------------------------------------------------------------------------------------
+; ---------------------- MISCELANIOUS SETTINGS RELATED -------------------------------
+; ------------------------------------------------------------------------------------
+
 ; Do not want start up screen
 (setq inhibit-startup-message t)
-; Tabs plz
+; Tabs are four characters wide plz
 (setq default-tab-width 4)
 ;disable backup
 (setq backup-inhibited t)
 ;disable auto save
 (setq auto-save-default nil)
+
 ; Linum mode adds line numbers in the gutter
 (require 'linum)
 (global-linum-mode)
 
+; Enable desktop saving
 (desktop-save-mode 1)
-;; Customization follows below
 (setq history-length 250)
 (add-to-list 'desktop-globals-to-save 'file-name-history)
 
+; Magit is Git integration
 (require 'magit)
 (global-set-key (kbd "C-x C-g") 'magit-status)
+
 
 (require 'icicles)
 (icy-mode)
