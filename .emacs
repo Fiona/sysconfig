@@ -14,8 +14,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
- '(c-default-style "gnu")
- '(c-syntactic-indentation nil)
+ '(c-default-style "bsd")
  '(cua-mode t nil (cua-base))
  '(imenu-auto-rescan t)
  '(show-paren-mode t)
@@ -81,11 +80,7 @@
 (defun php-mode-hook ()
   (setq tab-width 4
         c-basic-offset 4
-        c-hanging-comment-ender-p nil
-  	indent-tabs-mode
-	(not
-	 (and
-	      (string-match "\.php$" (buffer-file-name))))))
+))
 
 (add-hook 'php-mode-user-hook 
 	  'php-mode-hook)
@@ -155,7 +150,7 @@
 
 
 ; ------------------------------------------------------------------------------------
-; ---------------------- MISCELANIOUS SETTINGS RELATED -------------------------------
+; ---------------------- MISCELANIOUS SETTINGS ---------------------------------------
 ; ------------------------------------------------------------------------------------
 
 ; Do not want start up screen
