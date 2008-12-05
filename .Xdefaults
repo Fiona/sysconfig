@@ -1,45 +1,49 @@
  ! use xft for drawing fonts
- urxvt.font: xft:Bitstream Vera Sans Mono-8.5
- urxvt.background: black
- urxvt.foreground: green
+ URxvt.font: xft:Bitstream Vera Sans Mono-8.5
+ URxvt.background: black
+ URxvt.foreground: green
  ! make a scrollbar that's nearly black
- urxvt*scrollBar:     false
- urxvt*termName:     xterm
- urxvt*urllauncher:           firefox
+ URxvt*scrollBar:     false
+ URxvt*termName:     xterm
+ URxvt*urllauncher:           firefox
  ! matcher.button # 3 is a right-click
- urxvt*matcher.button:        3
- urxvt*saveLines:              8192
- urxvt.perl-ext-common:         default,matcher,tabbed
+ URxvt*matcher.button:        3
+ URxvt*saveLines:              8192
+ URxvt.perl-ext-common:         default,matcher,tabbed
  ! black 
- urxvt*color0:      #222222
- urxvt*color8:      #666666
+ URxvt*color0:      #222222
+ URxvt*color8:      #666666
  ! red
- urxvt*color1:      #9e1828
- urxvt*color9:      #cf6171
+ URxvt*color1:      #9e1828
+ URxvt*color9:      #cf6171
  ! green
- urxvt*color2:      #173100
- urxvt*color10:     #c5f779
+ URxvt*color2:      #173100
+ URxvt*color10:     #326a00
  ! yellow
- urxvt*color3:      #968a38
- urxvt*color11:     #fff796
+ URxvt*color3:      #968a38
+ URxvt*color11:     #fff796
  ! blue
- urxvt*color4:      #71C5F4
- urxvt*color12:     #67CDE9
+ URxvt*color4:      #71C5F4
+ URxvt*color12:     #67CDE9
  ! magenta
- urxvt*color5:      #963c59
- urxvt*color13:     #cf9ebe
+ URxvt*color5:      #963c59
+ URxvt*color13:     #cf9ebe
  ! cyan
- urxvt*color6:      #444
- urxvt*color14:     #aaa
+ URxvt*color6:      #444
+ URxvt*color14:     #aaa
  ! white
- urxvt*color7:      #bebebe
-
+ URxvt*color7:      #bebebe
+ URxvt*color15:     #aaa
  
- urxvt*cursorColor:       #d8d8d8
+ URxvt*cursorColor:       #d8d8d8
 
-urxvt.fading:           15
-urxvt.fadeColor:        black
-urxvt.shading:          50
-urxvt.inheritPixmap:    true
-urxvt.pointerColor:     black
-urxvt.pointerColor2:    white
+URxvt.fading:           15
+URxvt.fadeColor:        black
+URxvt.shading:          50
+URxvt.inheritPixmap:    true
+URxvt.pointerColor:     black
+URxvt.pointerColor2:    white
+URxvt.tabbed.tabbar-fg: 6
+URxvt.tabbed.tabbar-bg: 8
+URxvt.tabbed.tab-fg:    14
+URxvt.tabbed.tab-bg:    0
