@@ -176,7 +176,7 @@
      {
          button = "3"
          command = "spawn"
-         arg = "exec urxvt"
+         arg = "exec rxvt-unicode"
      }
      root
      {
@@ -224,28 +224,28 @@
          modkey = {"Mod4"}
          key = "F1"
          command = "spawn"
-         arg = "for i in /usr/share/man/man?;do ls $i; done | cut -d. -f1 | awesome-menu -e 'urxvt -e man ' 'See manual page for:'"
+         arg = "for i in /usr/share/man/man?;do ls $i; done | cut -d. -f1 | awesome-menu -e 'rxvt-unicode -e man ' 'See manual page for:'"
      }
      key
      {
          modkey = {"Mod4"}
          key = "F2"
          command = "spawn"
-         arg = "find /usr/bin -type f -executable ! -empty | awesome-menu -e 'urxvt ' Execute:"
+         arg = "find /usr/bin -type f -executable ! -empty | awesome-menu -e 'rxvt-unicode ' Execute:"
      }
      key
      {
          modkey = {"Mod4"}
          key = "F3"
          command = "spawn"
-         arg = "cut -d' ' -f1 ~/.ssh/known_hosts | cut -d, -f1 | awesome-menu -e 'urxvt -e ssh ' 'ssh to:'"
+         arg = "cut -d' ' -f1 ~/.ssh/known_hosts | cut -d, -f1 | awesome-menu -e 'rxvt-unicode -e ssh ' 'ssh to:'"
      }
      key
      {
          modkey = {"Mod4"}
          key = "Return"
          command = "spawn"
-         arg = "exec urxvt"
+         arg = "exec rxvt-unicode"
      }
      key
      {
