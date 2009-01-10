@@ -182,6 +182,9 @@
 (require 'magit)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 
+; Keyboard shortcuts
+(global-set-key (kbd "M-=") 'dabbrev-expand)
+
 
 (require 'icicles)
 (icy-mode)
