@@ -1,6 +1,7 @@
 (add-to-list 'load-path "~/elisp")
 (add-to-list 'load-path "~/elisp/mmm-mode")
 (add-to-list 'load-path "~/elisp/icicles")
+(add-to-list 'load-path "~/elisp/erc")
 
 
 
@@ -156,29 +157,47 @@
 
 
 
-; ------------------------------------------------------------------------------------
-; ---------------------- MISCELANIOUS SETTINGS ---------------------------------------
-; ------------------------------------------------------------------------------------
+;; ------------------------------------------------------------------------------------
+;; ---------------------- MISCELANIOUS SETTINGS ---------------------------------------
+;; ------------------------------------------------------------------------------------
 
-; Do not want start up screen
+;; -----
+;; Do not want start up screen
+;; -----
 (setq inhibit-startup-message t)
-; Tabs are four characters wide plz
+
+;; -----
+;; Tabs are four characters wide plz
+;; -----
 (setq default-tab-width 4)
-;disable backup
+
+
+;; -----
+;; disable backup
+;; -----
 (setq backup-inhibited t)
-;disable auto save
+
+;; -----
+;;disable auto save
+;; -----
 (setq auto-save-default nil)
 
-; Linum mode adds line numbers in the gutter
+;; -----
+;; Linum mode adds line numbers in the gutter
+;; -----
 (require 'linum)
 (global-linum-mode)
 
-; Enable desktop saving
-(desktop-save-mode 1)
-(setq history-length 250)
-(add-to-list 'desktop-globals-to-save 'file-name-history)
 
-; Magit is Git integration
+;; -----
+;; Allows us to switch windows by number
+;; -----
+(require 'window-number)
+(window-number-meta-mode)
+
+;; -----
+;; Magit is Git integration
+;; -----
 (require 'magit)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 
@@ -186,8 +205,83 @@
 (global-set-key (kbd "M-=") 'dabbrev-expand)
 
 
+;; -----
+;; Restore frame layout and open buffers
+;; -----
+(require 'windows)
+(win:startup-with-window)
+
+(autoload 'save-current-configuration "revive" "Save status" t)
+(autoload 'resume "revive" "Resume Emacs" t)
+(autoload 'wipe "revive" "Wipe Emacs" t)
+
+; This is needed to avoid that the save-history buffer is revived as well
+(setq revive:ignore-buffer-pattern "^\\( \\*\\)\\|\\(\\.emacs-histories\\)")
+
+; Save on exit
+(add-hook 'kill-emacs-hook 'save-current-configuration)
+
+; When loaded, see if the config file exists and restores the session
+(add-hook 'after-init-hook
+  (if (file-exists-p revive:configuration-file)
+      (let ()
+        (resume)
+        (add-hook 'kill-emacs-hook 'save-current-configuration)
+		))
+)
+
+
+;; -----
+;; Reconfigure keys
+;; -----
+(global-set-key (kbd "M-=") 'dabbrev-expand)
+(define-key global-map [f12] 'kill-buffer)
+
+
 (require 'icicles)
 (icy-mode)
 
 (require 'dired+)
 
+
+; ------------------------------------------------------------------------------------
+; ---------------------- ERC IRC MODE ------------------------------------------------
+; ------------------------------------------------------------------------------------
+(require 'erc)
+
+(setq erc-autojoin-channels-alist
+	  '(("freenode.net" "#geekup")
+	  ("blitzed.org" "#bilge")
+	  ("localhost" "#bitlbee"))
+)
+
+(add-hook 'erc-after-connect
+  '(lambda (SERVER NICK)
+    	     (cond
+    	      ((string-match "localhost" SERVER)
+    	       (erc-message "PRIVMSG" "#bitlbee identify togepi")))))
+
+(erc-timestamp-mode t)
+(setq erc-timestamp-format "[%R-%m/%d]")
+
+(setq erc-user-full-name "Fiona Burrows")
+(setq erc-email-userid "fiona@myrmidonprocess.com")
+
+(setq erc-keywords '("fiona"))
+
+; thanks for this one emacs wiki
+(setq erc-button-url-regexp
+	  "\\([-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]+\\.\\)+[-a-zA-Z0-9_=!?#$@~`%&*+\\/:;,]*[-a-zA-Z0-9\\/]")
+
+(defun irc-maybe ()
+  "Connect to IRC."
+  (interactive)
+  (when (y-or-n-p "IRC? ")
+	(erc :server "irc.freenode.net" :port 6667 :nick "Fiona")
+	(erc :server "irc.blitzed.org" :port 6667 :nick "Fiona")
+	; Bitlbee
+	(erc :server "localhost" :port 6667 :nick "Fiona")
+	)
+  )
+
+(add-hook 'after-init-hook 'irc-maybe)
