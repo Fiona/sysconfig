@@ -201,6 +201,9 @@
 (require 'magit)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 
+; Keyboard shortcuts
+(global-set-key (kbd "M-=") 'dabbrev-expand)
+
 
 ;; -----
 ;; Restore frame layout and open buffers
