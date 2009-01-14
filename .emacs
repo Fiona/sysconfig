@@ -255,12 +255,6 @@
 	  ("localhost" "#bitlbee"))
 )
 
-(add-hook 'erc-after-connect
-  '(lambda (SERVER NICK)
-    	     (cond
-    	      ((string-match "localhost" SERVER)
-    	       (erc-message "PRIVMSG" "#bitlbee identify togepi")))))
-
 (erc-timestamp-mode t)
 (setq erc-timestamp-format "[%R-%m/%d]")
 
