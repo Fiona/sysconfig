@@ -236,7 +236,7 @@
 ;; -----
 (global-set-key (kbd "M-=") 'dabbrev-expand)
 (define-key global-map [f12] 'kill-buffer)
-
+(global-set-key (kbd "C-y") 'yank-pop)
 
 (require 'icicles)
 (icy-mode)
