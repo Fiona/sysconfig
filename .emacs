@@ -232,11 +232,21 @@
 
 
 ;; -----
+;; Uniqify will make buffers with the same name more meaning ful
+;; (file|dir) rather than file<2>
+;; -----
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+; Don't rename special buffers
+(setq uniquify-ignore-buffers-re "^\*")
+
+
+;; -----
 ;; Reconfigure keys
 ;; -----
 (global-set-key (kbd "M-=") 'dabbrev-expand)
 (define-key global-map [f12] 'kill-buffer)
-(global-set-key (kbd "C-y") 'yank-pop)
+;(global-set-key (kbd "C-y") 'yank-pop)
 
 (require 'icicles)
 (icy-mode)
