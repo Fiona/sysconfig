@@ -135,21 +135,74 @@
 
 
 
-; ------------------------------------------------------------------------------------
-; ---------------------- EDITOR ADDITIONS --------------------------------------------
-; ------------------------------------------------------------------------------------
+;; ------------------------------------------------------------------------------------
+;; ---------------------- FLYMAKE SETTINGS --------------------------------------------
+;; ------------------------------------------------------------------------------------
+(require 'flymake)
 
-; ------------
-; YASnippet
-; ------------
+(defun auto-flymake-goto-next-error()
+  (interactive)
+  (flymake-goto-next-error)
+  (flymake-display-err-menu-for-current-line)
+  )
+
+(defun auto-flymake-goto-prev-error()
+  (interactive)
+  (flymake-goto-next-error)
+  (flymake-display-err-menu-for-current-line)
+  )
+
+
+;; For PHP
+;; can't remember where it came from
+(unless (fboundp 'flymake-php-init)
+  (defun flymake-php-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "php" (list "-f" local-file "-l")))))
+
+(let ((php-ext-re "\\.php[345]?\\'")
+      (php-error-re
+       "\\(?:Parse\\|Fatal\\) error: \\(.*\\) in \\(.*\\) on line \\([0-9]+\\)"))
+  (unless (assoc php-ext-re flymake-allowed-file-name-masks)
+    (add-to-list 'flymake-allowed-file-name-masks
+                 (list php-ext-re
+					   'flymake-php-init
+					   'flymake-simple-cleanup
+					   'flymake-get-real-file-name))
+    (add-to-list 'compilation-error-regexp-alist-alist
+                 (list 'compilation-php
+					   php-error-re  2 3 nil nil))
+    (add-to-list 'compilation-error-regexp-alist 'compilation-php)
+    (add-to-list 'flymake-err-line-patterns
+                 (list php-error-re 2 3 nil 1))))
+
+(add-hook 'php-mode-hook (lambda () (flymake-mode t)))
+
+(set-face-background 'flymake-errline "#ffa2a2")
+(set-face-foreground 'flymake-errline "#ff0000")
+
+
+
+
+;; ------------------------------------------------------------------------------------
+;; ---------------------- EDITOR ADDITIONS --------------------------------------------
+;; ------------------------------------------------------------------------------------
+
+;; -----
+;; YASnippet
+;; -----
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory "~/elisp/snippets/")
 
 
-; -----------
+;; -----
 ; CUA and CUA-Rectangle mode
-; -----------
+;; -----
 (setq cua-enable-cua-keys nil)
 (setq cua-highlight-region-shift-only t) ;; no transient mark mode
 (setq cua-toggle-set-mark nil) ;; original set-mark behavior, i.e. no transient-mark-mode
@@ -199,10 +252,6 @@
 ;; Magit is Git integration
 ;; -----
 (require 'magit)
-(global-set-key (kbd "C-x C-g") 'magit-status)
-
-; Keyboard shortcuts
-(global-set-key (kbd "M-=") 'dabbrev-expand)
 
 
 ;; -----
@@ -227,15 +276,20 @@
       (let ()
         (resume)
         (add-hook 'kill-emacs-hook 'save-current-configuration)
-		))
+		)
+	)
 )
 
 
 ;; -----
 ;; Reconfigure keys
 ;; -----
-(global-set-key (kbd "M-=") 'dabbrev-expand)
+(global-set-key (kbd "M-]") 'dabbrev-expand)
 (define-key global-map [f12] 'kill-buffer)
+(global-set-key (kbd "M-'") 'flymake-display-err-menu-for-current-line)
+(global-set-key (kbd "M-a") 'auto-flymake-goto-prev-error)
+(global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
+(global-set-key (kbd "C-x C-g") 'magit-status)
 
 
 (require 'icicles)
@@ -252,7 +306,7 @@
 (setq erc-autojoin-channels-alist
 	  '(("freenode.net" "#geekup")
 	  ("blitzed.org" "#bilge")
-	  ("localhost" "#bitlbee"))
+	  ("localhost"))
 )
 
 (erc-timestamp-mode t)
@@ -279,3 +333,4 @@
   )
 
 (add-hook 'after-init-hook 'irc-maybe)
+
