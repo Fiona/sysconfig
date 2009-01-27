@@ -217,6 +217,7 @@
 ;; Org mode
 ;; -----
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(setq org-agenda-files (file-expand-wildcards "~/org-mode-files/*.org"))
 (setq org-log-done t)
 
 
@@ -306,6 +307,7 @@
 (global-set-key (kbd "M-a") 'auto-flymake-goto-prev-error)
 (global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
 (global-set-key (kbd "C-x C-g") 'magit-status)
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 
 (require 'icicles)
