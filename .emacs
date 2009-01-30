@@ -134,6 +134,14 @@
 (autoload 'javascript-mode "javascript" nil t)
 
 
+; ------------
+; CSS mode
+; ------------
+(autoload 'css-mode "css-mode")
+(setq auto-mode-alist
+      (cons '("\\.css\\'" . css-mode) auto-mode-alist))
+
+
 
 ;; ------------------------------------------------------------------------------------
 ;; ---------------------- FLYMAKE SETTINGS --------------------------------------------
