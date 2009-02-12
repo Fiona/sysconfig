@@ -228,7 +228,6 @@
 (setq org-agenda-files (file-expand-wildcards "~/org-mode-files/*.org"))
 (setq org-log-done t)
 
-
 ;; -----
 ;; Do not want start up screen
 ;; -----
@@ -238,7 +237,6 @@
 ;; Tabs are four characters wide plz
 ;; -----
 (setq default-tab-width 4)
-
 
 ;; -----
 ;; disable backup
@@ -256,7 +254,6 @@
 (require 'linum)
 (global-linum-mode)
 
-
 ;; -----
 ;; Allows us to switch windows by number
 ;; -----
@@ -268,6 +265,10 @@
 ;; -----
 (require 'magit)
 
+;; -----
+;; We can browse the keyring with this
+;; -----
+(require 'browse-kill-ring)
 
 ;; -----
 ;; Restore frame layout and open buffers
@@ -304,7 +305,6 @@
 (setq uniquify-buffer-name-style 'reverse)
 ; Don't rename special buffers
 (setq uniquify-ignore-buffers-re "^\*")
-
 
 ;; -----
 ;; Reconfigure keys
