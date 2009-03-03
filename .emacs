@@ -261,6 +261,11 @@
 (window-number-meta-mode)
 
 ;; -----
+;; Nearly murdered emacs for it's yes or no bullshit
+;; -----
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; -----
 ;; Magit is Git integration
 ;; -----
 (require 'magit)
@@ -316,6 +321,7 @@
 (global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 (global-set-key (kbd "C-c a") 'org-agenda)
+(define-key global-map [f5] 'revert-buffer)
 
 
 (require 'icicles)
