@@ -266,6 +266,11 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; -----
+;; File browser
+;; -----
+(require 'nav)
+
+;; -----
 ;; Magit is Git integration
 ;; -----
 (require 'magit)
