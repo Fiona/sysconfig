@@ -230,9 +230,11 @@
 (setq org-log-done t)
 
 ;; -----
-;; Do not want start up screen
+;; Do not want start up screen, scrollbars or menus
 ;; -----
 (setq inhibit-startup-message t)
+(scroll-bar-mode)
+(menu-bar-mode)
 
 ;; -----
 ;; Tabs are four characters wide plz
