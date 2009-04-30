@@ -84,15 +84,15 @@ prompt_wunjo_setup() {
 	pc[default]='Default'
 	pc[date]='Cyan'
 	pc[time]='Blue'
-	pc[host]='Green'
-	pc[user]='Cyan'
+	pc[host]='Magenta'
+	pc[user]='Magenta'
 	pc[punc]='Yellow'
 	pc[line]='Magenta'
 	pc[hist]='Green'
 	pc[path]='Cyan'
 	pc[shortpath]='Default'
 	pc[rc]='Red'
-	pc[fillline]='Cyan'
+	pc[filline]='blue'
 	pc[scm_branch]='Cyan'
 	pc[scm_commitid]='Yellow'
 	pc[scm_status_dirty]='Red'
@@ -112,28 +112,27 @@ prompt_wunjo_setup() {
 
 	p_line="$pc[line]%y$pc[reset]"
 
-
 	PROMPT=
+	PROMPT+="$pc[filline]┌─── "
 	if [ $verbose ]; then
-		PROMPT+="$pc[host]%m$pc[reset] "
+		PROMPT+="$pc[user]%n@$pc[host]%m$pc[reset] "
 	fi
-	PROMPT+=" $pc[filline]——— $pc[path]%(2~.%~.%/)$pc[reset]"
+	PROMPT+="$pc[path]%(2~.%~.%/)$pc[reset]"
 	PROMPT+="\$(prompt_wunjo_scm_status)"
-	PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset])"
-	PROMPT+=" $pc[filline]—————————————————————————————————————————————————"
+	PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset]) $pc[filline]───> "
 
 	PROMPT+="
 "
-	PROMPT+="$pc[shortpath]%1~$pc[reset]"
+	PROMPT+="$pc[filline]└─ $pc[shortpath]%1~$pc[reset]"
 	PROMPT+="\$(prompt_wunjo_scm_branch)"
-	PROMPT+=" $pc[#]%#$pc[reset] "
+	PROMPT+=" $pc[#]\$$pc[reset] "
 
 
 	RPROMPT=
 	if [ $verbose ]; then
 		RPROMPT+="$p_date "
 	fi
-	RPROMPT+="$pc[user]%n$pc[reset]"
+	RPROMPT+="$pc[reset]"
 	RPROMPT+=" $p_line"
 
 	export PROMPT RPROMPT
@@ -150,9 +149,14 @@ prompt_wunjo_precmd() {
 	else
 		psvar[1]="$ex"
 	fi
+
+	# I like this extra empty line
+	echo ""
+
 }
 
 prompt_wunjo_scm_status() {
+
 	zgit_isgit || return
 	local -A pc
 	pc=(${(kv)wunjo_prompt_colors})
@@ -251,9 +255,14 @@ prompt_wunjo_scm_status() {
 		fi
 	fi
 
+	COMMIT_LINE=${(j: :)commits}
+	export COMMIT_LINE
+
 	if [ $#commits -gt 0 ]; then
 		echo -n " ${(j: :)commits}"
+		return ${#${(j: :)commits}}
 	fi
+
 }
 
 prompt_wunjo_scm_branch() {
