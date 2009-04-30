@@ -47,3 +47,6 @@ URxvt.tabbed.tabbar-fg: 6
 URxvt.tabbed.tabbar-bg: 8
 URxvt.tabbed.tab-fg:    14
 URxvt.tabbed.tab-bg:    0
+
+Xcursor.theme: simpleandsoft
+
