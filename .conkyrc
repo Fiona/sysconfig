@@ -128,7 +128,7 @@ ${color lightgrey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar}
 ${color lightgrey}Processes:$color $processes  ${color grey}Running:$color $running_processes
 
 ${font Arial:bold:size=15}${color #7663d4}File System ${color #968ad4}${hr 1}
-${font Arial:size=10}${color lightgrey}${fs_used /}/${fs_size /} ${fs_bar /}
+${font Arial:size=10}${color lightgrey}${fs_used /home/}/${fs_size /home/} ${fs_bar /}
 
 ${font Arial:bold:size=15}${color #7663d4}Processes ${color #968ad4}${hr 1}
 ${font Arial:size=10}${color lightgrey}${color}Name              PID     CPU%   MEM%
