@@ -78,15 +78,6 @@
 ; ------------
 (require 'php-mode)
 
-; stop indentation being a cock
-(defun php-mode-hook ()
-  (setq tab-width 4
-        c-basic-offset 4
-))
-
-(add-hook 'php-mode-user-hook 
-	  'php-mode-hook)
-
 
 ; Drupal file types
 (add-to-list 'auto-mode-alist '("\\.module$" . php-mode))
@@ -191,9 +182,9 @@
 
 (add-hook 'php-mode-hook (lambda () (flymake-mode t)))
 
+
 (set-face-background 'flymake-errline "#ffa2a2")
 (set-face-foreground 'flymake-errline "#ff0000")
-
 
 
 
@@ -216,6 +207,23 @@
 (setq cua-highlight-region-shift-only t) ;; no transient mark mode
 (setq cua-toggle-set-mark nil) ;; original set-mark behavior, i.e. no transient-mark-mode
 (cua-mode t)
+
+
+;; -----
+;; Auto complete
+;; -----
+(when (require 'auto-complete nil t)
+  (require 'auto-complete-yasnippet)
+  (global-auto-complete-mode t)
+
+  (set-face-background 'ac-candidate-face "lightgray")
+  (set-face-underline 'ac-candidate-face "darkgray")
+  (set-face-background 'ac-selection-face "steelblue")
+
+  (setq ac-dwim t)
+  (set-default 'ac-sources '(ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
+)
+
 
 
 
