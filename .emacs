@@ -358,6 +358,25 @@
 
 (require 'dired+)
 
+;; -----
+;; This enhances tags by searching up the current directory for a tags file so
+;; the tags file searched in is generally the current project open.
+;; -----
+(require 'etags-table)
+(setq etags-table-search-up-depth 7)
+
+;; -----
+;; This function will just let me create tags easily
+;; -----
+(defun php-create-tags (dir-name)
+  "Create tags file."
+  (interactive "DDirectory: ")
+  (eshell-command 
+   (format "find '%s' -type f -name \"*.php\" | etags - " dir-name)))
+
+(global-set-key (kbd "M->") 'php-create-tags)
+
+
 
 ;; -----
 ;; Highlight lines longer than 80 characters
