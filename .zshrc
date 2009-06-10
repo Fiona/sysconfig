@@ -16,6 +16,7 @@ compinit
 ## Set aliases
 #################
 alias ls='ls --color=auto'
+alias ack='ack-grep'
 
 #################
 ## Load prompt theme
