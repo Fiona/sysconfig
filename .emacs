@@ -352,6 +352,9 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (define-key global-map [f5] 'revert-buffer)
 
+(define-key global-map [f10] 'org-clock-in)
+(define-key global-map [f11] 'org-clock-out)
+
 
 (require 'icicles)
 (icy-mode)
