@@ -1,11 +1,12 @@
 -- Include awesome libraries, with lots of useful function!
 require("awful")
 require("beautiful")
+require("naughty")
 
 -- {{{ Variable definitions
 -- My theme
-theme_path = os.getenv("HOME") .. "/.config/awesome/themes/fiona/theme"
---theme_path = "/usr/share/awesome/themes/default/theme"
+theme_path = os.getenv("HOME") .. "/.config/awesome/themes/fiona/theme.lua"
+-- theme_path = "/usr/share/awesome/themes/default/theme.lua"
 beautiful.init(theme_path)
 
 terminal = "urxvt"
@@ -40,16 +41,16 @@ layouts =
 }
 
 -- Table of clients that should be floating
-floatapp =
+floatapps =
 {
-  ["gimp"] = true,
-  ["Download"] = true
+  -- ["gimp"] = true,
+  -- ["Download"] = true
 }
 
 -- Apps that should be moved to a specific tag
 apptags =
 {
-  ["Firefox"] = { screen = 1, tag = 1 }
+  -- ["Firefox"] = { screen = 1, tag = 1 }
 }
 
 -- Define if we want to use titlebar on all applications.
@@ -90,7 +91,7 @@ seperator_right.text = "<b> :: </b>"
 
 -- Create time widget
 timebox = widget({ type = "textbox", name = "time", align = "right" })
-timebox.text = "<b><small> " .. AWESOME_RELEASE .. " </small></b>"
+timebox.text = "<b><small> time </small></b>"
 
 -- Create a systray
 mysystray = widget({ type = "systray", align = "right" })
@@ -129,10 +130,7 @@ mytasklist.buttons = awful.util.table.join(
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
-    mypromptbox[s] = widget({ type = "textbox", align = "left" })
-
-    -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist.new(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    mypromptbox[s] = awful.widget.prompt({ align = "left" })
 
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
@@ -144,9 +142,9 @@ for s = 1, screen.count() do
                 awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
 
     -- Create taglist and tasklist widgets
-    mytaglist[s] = awful.widget.taglist.new(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
-    mytasklist[s] = awful.widget.tasklist.new(function(c)
+    mytasklist[s] = awful.widget.tasklist(function(c)
                                                   return awful.widget.tasklist.label.currenttags(c, s)
                                               end, mytasklist.buttons)
 
@@ -187,12 +185,7 @@ globalkeys = awful.util.table.join(
 		   awful.key({ modkey }, "Escape", awful.tag.history.restore),
 
 		   -- Scrot on print screen
-		   awful.key({}, "Print", function () awful.util.spawn("scrot 'screen-%Y-%m-%d_%H%M.png' -e 'mv $f ~/pictures/screens/'") end),
-
-		   -- Dmenu binding
-		   awful.key({ modkey }, "q", function () awful.util.spawn(
-			 "`dmenu_path | dmenu -nb '#000000' -nf '#ffffff'` && exec $exe"
-		   ) end),
+		   -- awful.key({}, "Print", function () awful.util.spawn("scrot 'screen-%Y-%m-%d_%H%M.png' -e 'mv $f ~/pictures/screens/'") end),
 
 		   -- Standard program
 		   awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
@@ -237,7 +230,16 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen],
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end)
+              end),
+
+		   -- Dmenu binding
+		   awful.key({ modkey }, "q",
+		     function ()
+			   awful.util.spawn(
+			     "dmenu_run -nb '#000000' -nf '#ffffff'"
+		   		 )
+			  end)
+
 )
 
 
@@ -368,13 +370,13 @@ awful.hooks.manage.register(function (c, startup)
     c.border_color = beautiful.border_normal
 
     -- Check if the application should be floating.
-    local cls = c.class
-    local inst = c.instance
-    if floatapps[cls] then
-        awful.client.floating.set(c, floatapps[cls])
-    elseif floatapps[inst] then
-        awful.client.floating.set(c, floatapps[inst])
-    end
+    --local cls = c.class
+    --local inst = c.instance
+    --if floatapps[cls] then
+    --    awful.client.floating.set(c, floatapps[cls])
+    --elseif floatapps[inst] then
+    --    awful.client.floating.set(c, floatapps[inst])
+    --end
 
     -- Check application->screen/tag mappings.
     local target
