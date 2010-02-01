@@ -317,6 +317,13 @@
 	)
 )
 
+
+;; -----
+;; Finally - a minimap for emacs!
+;; -----
+(require 'minimap)
+
+
 ;; -----
 ;; How did I live without this? This will make certain windows permanent.
 ;; -----
@@ -350,6 +357,10 @@
 (global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
 (global-set-key (kbd "C-x C-g") 'magit-status)
 (global-set-key (kbd "C-c a") 'org-agenda)
+
+(define-key global-map [f1] 'minimap-create)
+(define-key global-map [f2] 'minimap-kill)
+
 (define-key global-map [f5] 'revert-buffer)
 
 (define-key global-map [f10] 'org-clock-in)
