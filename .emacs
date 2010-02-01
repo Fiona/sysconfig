@@ -347,6 +347,9 @@
 ; Don't rename special buffers
 (setq uniquify-ignore-buffers-re "^\*")
 
+(require 'minimap)
+
+
 ;; -----
 ;; Reconfigure keys
 ;; -----
@@ -356,19 +359,34 @@
 (global-set-key (kbd "M-a") 'auto-flymake-goto-prev-error)
 (global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
 (global-set-key (kbd "C-x C-g") 'magit-status)
-(global-set-key (kbd "C-c a") 'org-agenda)
 
 (define-key global-map [f1] 'minimap-create)
 (define-key global-map [f2] 'minimap-kill)
 
+;(global-set-key (kbd "C-c a") 'org-agenda)
 (define-key global-map [f5] 'revert-buffer)
 
 (define-key global-map [f10] 'org-clock-in)
 (define-key global-map [f11] 'org-clock-out)
 
+; Remapping arrow keys
+(global-unset-key "\C-h")
+(global-set-key (kbd "C-h") 'backward-char)
+(global-set-key (kbd "C-n") 'forward-char)
+(global-set-key (kbd "C-c") 'previous-line)
+(global-set-key (kbd "C-t") 'next-line)
 
-(require 'icicles)
-(icy-mode)
+; Home + end keys
+(global-set-key (kbd "C-g") 'move-beginning-of-line)
+(global-set-key (kbd "C-r") 'move-end-of-line)
+
+; pgup + pgdown keys
+(global-set-key (kbd "C-l") 'cua-scroll-down)
+(global-set-key (kbd "C-s") 'cua-scroll-up)
+
+; Insert + delete keys
+(global-set-key (kbd "C-f") 'overwrite-mode)
+(global-set-key (kbd "C-d") 'delete-char)
 
 (require 'dired+)
 
