@@ -161,7 +161,7 @@ globalkeys = awful.util.table.join(
 		   awful.key({ modkey }, "Escape", awful.tag.history.restore),
 
 		   -- Scrot on print screen
-		   -- awful.key({}, "Print", function () awful.util.spawn("scrot 'screen-%Y-%m-%d_%H%M.png' -e 'mv $f ~/pictures/screens/'") end),
+		   awful.key({}, "Print", function () awful.util.spawn("scrot 'screen-%Y-%m-%d_%H%M.png' -e 'mv $f ~/pictures/screens/'") end),
 
 		   -- Standard program
 		   awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
