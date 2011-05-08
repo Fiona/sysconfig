@@ -248,6 +248,15 @@
 ;; Tabs are four characters wide plz
 ;; -----
 (setq default-tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+; sort out python specific crap
+(add-hook 'python-mode-hook
+      (lambda ()
+        (setq indent-tabs-mode nil)
+        (setq tab-width 4)
+        (setq python-indent 4)))
+
 
 ;; -----
 ;; disable backup
@@ -317,11 +326,10 @@
 	)
 )
 
-
 ;; -----
 ;; Finally - a minimap for emacs!
 ;; -----
-(require 'minimap)
+;(require 'minimap)
 
 
 ;; -----
@@ -347,8 +355,6 @@
 ; Don't rename special buffers
 (setq uniquify-ignore-buffers-re "^\*")
 
-(require 'minimap)
-
 
 ;; -----
 ;; Reconfigure keys
@@ -370,23 +376,23 @@
 (define-key global-map [f11] 'org-clock-out)
 
 ; Remapping arrow keys
-(global-unset-key "\C-h")
-(global-set-key (kbd "C-h") 'backward-char)
-(global-set-key (kbd "C-n") 'forward-char)
-(global-set-key (kbd "C-c") 'previous-line)
-(global-set-key (kbd "C-t") 'next-line)
+;(global-unset-key "\C-h")
+;(global-set-key (kbd "C-h") 'backward-char)
+;(global-set-key (kbd "C-n") 'forward-char)
+;(global-set-key (kbd "C-c") 'previous-line)
+;(global-set-key (kbd "C-t") 'next-line)
 
 ; Home + end keys
-(global-set-key (kbd "C-g") 'move-beginning-of-line)
-(global-set-key (kbd "C-r") 'move-end-of-line)
+;(global-set-key (kbd "C-g") 'move-beginning-of-line)
+;(global-set-key (kbd "C-r") 'move-end-of-line)
 
 ; pgup + pgdown keys
-(global-set-key (kbd "C-l") 'cua-scroll-down)
-(global-set-key (kbd "C-s") 'cua-scroll-up)
+;(global-set-key (kbd "C-l") 'cua-scroll-down)
+;(global-set-key (kbd "C-s") 'cua-scroll-up)
 
 ; Insert + delete keys
-(global-set-key (kbd "C-f") 'overwrite-mode)
-(global-set-key (kbd "C-d") 'delete-char)
+;(global-set-key (kbd "C-f") 'overwrite-mode)
+;(global-set-key (kbd "C-d") 'delete-char)
 
 (require 'dired+)
 
