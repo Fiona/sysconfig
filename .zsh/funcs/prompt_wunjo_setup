@@ -11,6 +11,10 @@ prompt_wunjo_help () {
 EOF
 }
 
+revstring() {
+	git describe --tags --always $1 2>/dev/null ||
+	git rev-parse --short $1 2>/dev/null
+}
 
 coloratom() {
 	local off=$1 atom=$2
@@ -81,18 +85,18 @@ prompt_wunjo_setup() {
 	attcode[no-conceal]=28
 
 	local -A pc
-	pc[default]='Default'
-	pc[date]='Cyan'
-	pc[time]='Blue'
-	pc[host]='Magenta'
-	pc[user]='Magenta'
-	pc[punc]='Yellow'
-	pc[line]='Magenta'
-	pc[hist]='Green'
+	pc[default]='default'
+	pc[date]='yellow'
+	pc[time]='yellow'
+	pc[host]='yellow'
+	pc[user]='Red'
+	pc[punc]='yellow'
+	pc[line]='magenta'
+	pc[hist]='green'
 	pc[path]='Cyan'
-	pc[shortpath]='Default'
-	pc[rc]='Red'
-	pc[filline]='blue'
+	pc[shortpath]='default'
+	pc[rc]='red'
+        pc[filline]='blue'
 	pc[scm_branch]='Cyan'
 	pc[scm_commitid]='Yellow'
 	pc[scm_status_dirty]='Red'
@@ -113,20 +117,22 @@ prompt_wunjo_setup() {
 	p_line="$pc[line]%y$pc[reset]"
 
 	PROMPT=
-	PROMPT+="$pc[filline]┌─── "
+        PROMPT+="
+$pc[filline]┌─── "
 	if [ $verbose ]; then
 		PROMPT+="$pc[user]%n@$pc[host]%m$pc[reset] "
 	fi
 	PROMPT+="$pc[path]%(2~.%~.%/)$pc[reset]"
 	PROMPT+="\$(prompt_wunjo_scm_status)"
 	PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset]) $pc[filline]───> "
-
 	PROMPT+="
 "
-	PROMPT+="$pc[filline]└─ $pc[shortpath]%1~$pc[reset]"
+        PROMPT+="$pc[filline]└─ $pc[shortpath]%1~$pc[reset]"
+	#PROMPT+="$pc[hist]%h$pc[reset] "
+	#PROMPT+="$pc[shortpath]%1~$pc[reset]"
 	PROMPT+="\$(prompt_wunjo_scm_branch)"
-	PROMPT+=" $pc[#]\$$pc[reset] "
-
+	#PROMPT+=" $pc[#]%#$pc[reset] "
+        PROMPT+=" $pc[#]\$$pc[reset] "
 
 	RPROMPT=
 	if [ $verbose ]; then
@@ -136,7 +142,7 @@ prompt_wunjo_setup() {
 	RPROMPT+=" $p_line"
 
 	export PROMPT RPROMPT
-	precmd_functions+='prompt_wunjo_precmd'
+	add-zsh-hook precmd prompt_wunjo_precmd
 }
 
 prompt_wunjo_precmd() {
@@ -149,33 +155,28 @@ prompt_wunjo_precmd() {
 	else
 		psvar[1]="$ex"
 	fi
-
-	# I like this extra empty line
-	echo ""
-
 }
 
 prompt_wunjo_scm_status() {
-
 	zgit_isgit || return
 	local -A pc
 	pc=(${(kv)wunjo_prompt_colors})
 
 	head=$(zgit_head)
-	gitcommit=$(git describe --always $head 2>/dev/null)
+	gitcommit=$(revstring $head)
 
 	local -a commits
 
 	if zgit_rebaseinfo; then
-		orig_commit=$(git describe --always $zgit_info[rb_head])
+		orig_commit=$(revstring $zgit_info[rb_head])
 		orig_name=$(git name-rev --name-only $zgit_info[rb_head])
 		orig="$pc[scm_branch]$orig_name$pc[punc]($pc[scm_commitid]$orig_commit$pc[punc])"
-		onto_commit=$(git describe --always $zgit_info[rb_onto])
+		onto_commit=$(revstring $zgit_info[rb_onto])
 		onto_name=$(git name-rev --name-only $zgit_info[rb_onto])
 		onto="$pc[scm_branch]$onto_name$pc[punc]($pc[scm_commitid]$onto_commit$pc[punc])"
 
 		if [ -n "$zgit_info[rb_upstream]" ] && [ $zgit_info[rb_upstream] != $zgit_info[rb_onto] ]; then
-			upstream_commit=$(git describe --always $zgit_info[rb_upstream])
+			upstream_commit=$(revstring $zgit_info[rb_upstream])
 			upstream_name=$(git name-rev --name-only $zgit_info[rb_upstream])
 			upstream="$pc[scm_branch]$upstream_name$pc[punc]($pc[scm_commitid]$upstream_commit$pc[punc])"
 			commits+="rebasing $upstream$pc[reset]..$orig$pc[reset] onto $onto$pc[reset]"
@@ -199,14 +200,14 @@ prompt_wunjo_scm_status() {
 		if [ -n "$track_merge" ]; then
 			if git rev-parse --verify -q $track_merge >/dev/null; then
 				local track_remote=$(zgit_tracking_remote)
-				local tracked=$(git describe --always $track_merge 2>/dev/null)
+				local tracked=$(revstring $track_merge 2>/dev/null)
 
 				local -a revs
 				revs=($(git rev-list --reverse $track_merge..HEAD))
 				if [ $#revs -gt 0 ]; then
-					local base=$(git describe --always $revs[1]~1)
+					local base=$(revstring $revs[1]~1)
 					local base_name=$(git name-rev --name-only $base)
-					local base_short=$(git describe --always $base)
+					local base_short=$(revstring $base)
 					local word_commits
 					if [ $#revs -gt 1 ]; then
 						word_commits='commits'
@@ -227,7 +228,7 @@ prompt_wunjo_scm_status() {
 					if [[ $track_remote == "." ]]; then
 						track_name=${track_name##*/}
 					fi
-					tracked=$(git describe --always $tracked)
+					tracked=$(revstring $tracked)
 					commits+="tracking $pc[scm_branch]$track_name$pc[punc]"
 					if [[ "$tracked" != "$gitcommit" ]]; then
 						commits[$#commits]+="($pc[scm_commitid]$tracked$pc[punc])"
@@ -241,7 +242,7 @@ prompt_wunjo_scm_status() {
 	gitsvn=$(git rev-parse --verify -q --short git-svn)
 	if [ $? -eq 0 ]; then
 		gitsvnrev=$(zgit_svnhead $gitsvn)
-		gitsvn=$(git describe --always $gitsvn)
+		gitsvn=$(revstring $gitsvn)
 		if [ -n "$gitsvnrev" ]; then
 			local svninfo=''
 			local -a revs
@@ -255,14 +256,9 @@ prompt_wunjo_scm_status() {
 		fi
 	fi
 
-	COMMIT_LINE=${(j: :)commits}
-	export COMMIT_LINE
-
 	if [ $#commits -gt 0 ]; then
 		echo -n " ${(j: :)commits}"
-		return ${#${(j: :)commits}}
 	fi
-
 }
 
 prompt_wunjo_scm_branch() {
