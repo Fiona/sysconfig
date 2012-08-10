@@ -173,7 +173,7 @@
 					   'flymake-php-init
 					   'flymake-simple-cleanup
 					   'flymake-get-real-file-name))
-    (add-to-list 'compilation-error-regexp-alist-alist
+   (add-to-list 'compilation-error-regexp-alist-alist
                  (list 'compilation-php
 					   php-error-re  2 3 nil nil))
     (add-to-list 'compilation-error-regexp-alist 'compilation-php)
@@ -241,8 +241,8 @@
 ;; Do not want start up screen, scrollbars or menus
 ;; -----
 (setq inhibit-startup-message t)
-(scroll-bar-mode)
-(menu-bar-mode)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; -----
 ;; Tabs are four characters wide plz
@@ -304,6 +304,7 @@
 ;; Restore frame layout and open buffers
 ;; -----
 (require 'windows)
+(require 'revive)
 (win:startup-with-window)
 
 (autoload 'save-current-configuration "revive" "Save status" t)
@@ -364,12 +365,12 @@
 (global-set-key (kbd "M-'") 'flymake-display-err-menu-for-current-line)
 (global-set-key (kbd "M-a") 'auto-flymake-goto-prev-error)
 (global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
-(global-set-key (kbd "C-x C-g") 'magit-status)
+;(global-set-key (kbd "C-x C-g") 'magit-status)
 
-(define-key global-map [f1] 'minimap-create)
-(define-key global-map [f2] 'minimap-kill)
+;(define-key global-map [f1] 'minimap-create)
+;(define-key global-map [f2] 'minimap-kill)
 
-;(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c a") 'org-agenda)
 (define-key global-map [f5] 'revert-buffer)
 
 (define-key global-map [f10] 'org-clock-in)
@@ -458,5 +459,5 @@
 	)
   )
 
-(add-hook 'after-init-hook 'irc-maybe)
+;(add-hook 'after-init-hook 'irc-maybe)
 
