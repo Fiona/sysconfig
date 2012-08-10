@@ -123,7 +123,7 @@ for s = 1, screen.count() do
 
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", sceens = s })
+    mywibox[s] = awful.wibox({ position = "top", screen = s })
     -- Add widgets to the wibox - order matters
     mywibox[s].widgets = {
 		{
@@ -301,6 +301,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
+    { rule = { instance = "plugin-container" },
+        properties = { floating = true } },
 }
 -- }}}
 
@@ -341,3 +343,4 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 --	timebox.text = os.date("%A %d/%m/%y %X")
 --end)
 -- }}}
+
