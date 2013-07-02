@@ -232,6 +232,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
+    -- Scrot on print screen
+    awful.key({}, "Print", function () awful.util.spawn("scrot 'screen-%Y-%m-%d_%H%M.png' -e 'mv $f ~/pictures/screens/'") end),
+
+    -- Dmenu binding
+    awful.key({ modkey }, "q",
+        function ()
+            awful.util.spawn("dmenu_run -nb '#000000' -nf '#ffffff'")
+        end),
+
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
