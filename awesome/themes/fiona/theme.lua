@@ -76,8 +76,7 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 -- You can use your own command to set your wallpaper
--- theme.wallpaper_cmd = { "feh --bg-scale /home/fiona/pictures/wallpaper/space4.jpg" }
-theme.wallpaper_cmd = { "awsetbg /usr/share/awesome/themes/default/background.png" }
+theme.wallpaper = "/home/fiona/pictures/wallpaper/liara.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_tile = "/home/fiona/.config/awesome/themes/fiona/layouts/tilew.png"
