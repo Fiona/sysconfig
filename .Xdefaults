@@ -1,52 +1,41 @@
- ! use xft for drawing fonts
- URxvt.font: xft:Bitstream Vera Sans Mono-8.5
- URxvt.background: black
- URxvt.foreground: green
- ! make a scrollbar that's nearly black
- URxvt*scrollBar:     false
- URxvt*termName:     xterm
- URxvt*urllauncher:           firefox
- ! matcher.button # 3 is a right-click
- URxvt*matcher.button:        3
- URxvt*saveLines:              8192
- URxvt.perl-ext-common:         default,matcher,tabbed
- ! black 
- URxvt*color0:      #222222
- URxvt*color8:      #666666
- ! red
- URxvt*color1:      #9e1828
- URxvt*color9:      #cf6171
- ! green
- URxvt*color2:      #173100
- URxvt*color10:     #326a00
- ! yellow
- URxvt*color3:      #968a38
- URxvt*color11:     #fff796
- ! blue
- URxvt*color4:      #71C5F4
- URxvt*color12:     #67CDE9
- ! magenta
- URxvt*color5:      #963c59
- URxvt*color13:     #cf9ebe
- ! cyan
- URxvt*color6:      #444
- URxvt*color14:     #aaa
- ! white
- URxvt*color7:      #bebebe
- URxvt*color15:     #aaa
- 
- URxvt*cursorColor:       #d8d8d8
-
-URxvt.fading:           15
-URxvt.fadeColor:        black
-URxvt.shading:          50
-URxvt.inheritPixmap:    true
-URxvt.pointerColor:     black
-URxvt.pointerColor2:    white
-URxvt.tabbed.tabbar-fg: 6
-URxvt.tabbed.tabbar-bg: 8
-URxvt.tabbed.tab-fg:    14
-URxvt.tabbed.tab-bg:    0
-
-Xcursor.theme: simpleandsoft
-
+URxvt*matcher.button:	3
+URxvt.tabbed.tabbar-fg:	6
+URxvt.tabbed.tabbar-bg:	8
+URxvt.tabbed.tab-fg:	14
+URxvt.tabbed.tab-bg:	0
+URxvt.foreground:	green
+URxvt*saveLines:	8192
+URxvt*color7:	#bebebe
+URxvt*color0:	#222222
+URxvt*scrollBar:	false
+URxvt*color13:	#cf9ebe
+URxvt*urllauncher:	firefox
+URxvt*cursorColor:	#d8d8d8
+URxvt*color12:	#67CDE9
+URxvt.pointerColor2:	white
+URxvt*color11:	#fff796
+URxvt*color9:	#cf6171
+URxvt*color8:	#666666
+URxvt.fading:	15
+URxvt.shading:	50
+URxvt*color2:	#173100
+URxvt*color1:	#9e1828
+URxvt*termName:	xterm
+URxvt*color6:	#444
+URxvt*color14:	#aaa
+URxvt*color5:	#963c59
+URxvt.pointerColor:	black
+URxvt.perl-ext-common:	default,matcher,tabbed
+URxvt.inheritPixmap:	true
+URxvt*color3:	#968a38
+URxvt.fadeColor:	black
+URxvt*color10:	#326a00
+URxvt*color15:	#aaa
+URxvt.background:	black
+URxvt.font:	xft:Bitstream Vera Sans Mono-8.5
+URxvt*color4:	#71C5F4
+Xcursor.theme:	simpleandsoft
+xrenoise.use_xcursors:	1
+xrenoise.display:	:0
+xrenoise.display_resource:	0x00,0x16,0xAF,0x8F,0xC0,0x4D,0x14,0xC7
+xrenoise.executable_path:	/usr/local/bin/renoise-2.8.2
