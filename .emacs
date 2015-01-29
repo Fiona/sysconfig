@@ -2,6 +2,7 @@
 (add-to-list 'load-path "~/elisp/mmm-mode")
 (add-to-list 'load-path "~/elisp/icicles")
 (add-to-list 'load-path "~/elisp/erc")
+(add-to-list 'load-path "~/elisp/neotree")
 
 
 
@@ -10,22 +11,23 @@
 ; ------------------------------------------------------------------------------------
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(c-basic-offset 4)
  '(c-default-style "bsd")
  '(cua-mode t nil (cua-base))
+ '(delete-active-region nil)
  '(frame-background-mode (quote dark))
  '(imenu-auto-rescan t)
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :family "schumacher-clean"))))
  '(diredp-date-time ((t (:foreground "gray60"))))
  '(diredp-dir-heading ((t (:background "#1e1e1e" :foreground "white" :bold t :weight bold))))
@@ -67,6 +69,13 @@
 (color-theme-initialize)
 (color-theme-tango)
 
+
+; -------------
+; Package management
+; -------------
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 
 ; ------------------------------------------------------------------------------------
@@ -142,7 +151,7 @@
 ;(autoload 'tads3-mode "tads3-mode" "TADS 2 editing mode." t)
 ;(setq auto-mode-alist
 
-   
+
 
 
 ;; ------------------------------------------------------------------------------------
@@ -209,16 +218,6 @@
 (yas/initialize)
 (yas/load-directory "~/elisp/snippets/")
 
-
-;; -----
-; CUA and CUA-Rectangle mode
-;; -----
-(setq cua-enable-cua-keys nil)
-(setq cua-highlight-region-shift-only t) ;; no transient mark mode
-(setq cua-toggle-set-mark nil) ;; original set-mark behavior, i.e. no transient-mark-mode
-(cua-mode t)
-
-
 ;; -----
 ;; Auto complete
 ;; -----
@@ -235,8 +234,6 @@
 )
 
 
-
-
 ;; ------------------------------------------------------------------------------------
 ;; ---------------------- MISCELANIOUS SETTINGS ---------------------------------------
 ;; ------------------------------------------------------------------------------------
@@ -248,11 +245,12 @@
 (setq org-log-done t)
 
 ;; -----
-;; Do not want start up screen, scrollbars or menus
+;; Do not want start up screen, scrollbars, menus or the active region deletion behaviour
 ;; -----
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
+(setq delete-active-region nil)
 
 ;; -----
 ;; Tabs are four characters wide plz
@@ -421,7 +419,7 @@
 (defun php-create-tags (dir-name)
   "Create tags file."
   (interactive "DDirectory: ")
-  (eshell-command 
+  (eshell-command
    (format "find '%s' -type f -name \"*.php\" | etags - " dir-name)))
 
 (global-set-key (kbd "M->") 'php-create-tags)
@@ -431,10 +429,24 @@
 ;; -----
 ;; Highlight lines longer than 80 characters
 ;; -----
-;(font-lock-add-keywords 
+;(font-lock-add-keywords
 ; 'php-mode
 ; '(("^[^\n]\\{80\\}\\(.*\\)$"
 ;	1 font-lock-warning-face prepend)))
+
+;; -----
+;; Neat tree view
+;; ----
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
+
+;; Standard Jedi.el setting
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
+;; Trailing whitespace is dumb so i'm not having any.
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ; ------------------------------------------------------------------------------------
 ; ---------------------- ERC IRC MODE ------------------------------------------------
@@ -471,4 +483,3 @@
   )
 
 ;(add-hook 'after-init-hook 'irc-maybe)
-
