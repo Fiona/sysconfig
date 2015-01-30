@@ -118,16 +118,16 @@ prompt_wunjo_setup() {
 
 	PROMPT=
         PROMPT+="
-$pc[filline]┌─── "
+$pc[filline]---- "
 	if [ $verbose ]; then
 		PROMPT+="$pc[user]%n@$pc[host]%m$pc[reset] "
 	fi
 	PROMPT+="$pc[path]%(2~.%~.%/)$pc[reset]"
 	PROMPT+="\$(prompt_wunjo_scm_status)"
-	PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset]) $pc[filline]───> "
+	PROMPT+="%(?.. $pc[rc]exited %1v$pc[reset]) $pc[filline]---> "
 	PROMPT+="
 "
-        PROMPT+="$pc[filline]└─ $pc[shortpath]%1~$pc[reset]"
+        PROMPT+="$pc[filline]-> $pc[shortpath]%1~$pc[reset]"
 	#PROMPT+="$pc[hist]%h$pc[reset] "
 	#PROMPT+="$pc[shortpath]%1~$pc[reset]"
 	PROMPT+="\$(prompt_wunjo_scm_branch)"
