@@ -240,8 +240,11 @@
 ;; -----
 ;; Org mode
 ;; -----
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(setq org-agenda-files (file-expand-wildcards "~/org-mode-files/*.org"))
+(setq org-agenda-files (file-expand-wildcards "~/org/*.org"))
 (setq org-log-done t)
 
 ;; -----
