@@ -17,7 +17,7 @@ URxvt*color11:	#fff796
 URxvt*color9:	#cf6171
 URxvt*color8:	#666666
 URxvt.fading:	15
-URxvt.shading:	50
+URxvt.shading:	18
 URxvt*color2:	#173100
 URxvt*color1:	#9e1828
 URxvt*termName:	xterm
@@ -32,7 +32,7 @@ URxvt.fadeColor:	black
 URxvt*color10:	#326a00
 URxvt*color15:	#aaa
 URxvt.background:	black
-URxvt.font:	xft:Bitstream Vera Sans Mono-8.5
+URxvt.font:	xft:Bitstream Vera Sans Mono:size=9
 URxvt*color4:	#71C5F4
 Xcursor.theme:	simpleandsoft
 xrenoise.use_xcursors:	1
