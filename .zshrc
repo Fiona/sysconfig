@@ -53,3 +53,10 @@ export EDITOR="nano"
 
 # auto cds if i type a directory name
 setopt AUTO_CD
+
+export WORKON_HOME=~/envs
+source /usr/bin/virtualenvwrapper.sh
+
+alias em='emacsclient -nc -a ""'
+alias emc='emacsclient -t -a ""'
+EDITOR='emacsclient -a ""'
