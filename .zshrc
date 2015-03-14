@@ -48,9 +48,6 @@ setopt SHARE_HISTORY
 # ten second rm wait
 setopt RM_STAR_WAIT
 
-# If just to get rid of vi
-export EDITOR="nano"
-
 # auto cds if i type a directory name
 setopt AUTO_CD
 
@@ -60,3 +57,4 @@ source /usr/bin/virtualenvwrapper.sh
 alias em='emacsclient -nc -a ""'
 alias emc='emacsclient -t -a ""'
 EDITOR='emacsclient -a ""'
+export ALTERNATE_EDITOR=""

@@ -68,7 +68,7 @@ default_shade_color black
 default_outline_color black
 
 # Text alignment, other possible values are commented
-alignment top_right
+alignment top_left
 
 # Gap between borders of screen and text
 # same thing as passing -x at command line
@@ -126,10 +126,11 @@ ${color red}${cpugraph 0000ff 00ff00}
 ${color lightgrey}RAM Usage:$color $mem/$memmax - $memperc% ${membar}
 ${color lightgrey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar}
 ${color lightgrey}Processes:$color $processes  ${color grey}Running:$color $running_processes
+${color lightgrey}Out of date packages:$color ${color}${texeci 300 pacman -Qu | wc -l}
 
 ${font Arial:bold:size=15}${color #7663d4}File System ${color #968ad4}${hr 1}
 ${font Arial:bold:size=12}${color green}/home ${font Arial:size=10}${color lightgrey}${fs_used /home/}/${fs_size /home/} ${fs_bar /home}
-${font Arial:bold:size=12}${color green}~/data ${font Arial:size=10}${color lightgrey}${fs_used /home/fiona/data}/${fs_size /home/fiona/data} ${fs_bar /home/fiona/data}
+${font Arial:bold:size=12}${color green}/ ${font Arial:size=10}${color lightgrey}${fs_used /}/${fs_size /} ${fs_bar /}
 
 ${font Arial:bold:size=15}${color #7663d4}Processes ${color #968ad4}${hr 1}
 ${font Arial:size=10}${color lightgrey}${color}Name              PID     CPU%   MEM%

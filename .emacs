@@ -71,7 +71,7 @@
 
 
 ; -------------
-; Package management
+; Add MELPA to package management
 ; -------------
 (require 'package)
 (add-to-list 'package-archives
@@ -119,6 +119,7 @@
 ; ------------
 (autoload 'python-mode "python-mode" "Python Mode." t)
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+(add-to-list 'auto-mode-alist '("\\SConstruct\\'" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 (add-hook 'python-mode-hook
@@ -312,33 +313,6 @@
 (require 'browse-kill-ring)
 
 ;; -----
-;; Restore frame layout and open buffers
-;; -----
-(require 'windows)
-(require 'revive)
-(win:startup-with-window)
-
-(autoload 'save-current-configuration "revive" "Save status" t)
-(autoload 'resume "revive" "Resume Emacs" t)
-(autoload 'wipe "revive" "Wipe Emacs" t)
-
-; This is needed to avoid that the save-history buffer is revived as well
-(setq revive:ignore-buffer-pattern "^\\( \\*\\)\\|\\(\\.emacs-histories\\)")
-
-; Save on exit
-(add-hook 'kill-emacs-hook 'save-current-configuration)
-
-; When loaded, see if the config file exists and restores the session
-(add-hook 'after-init-hook
-  (if (file-exists-p revive:configuration-file)
-      (let ()
-        (resume)
-        (add-hook 'kill-emacs-hook 'save-current-configuration)
-		)
-	)
-)
-
-;; -----
 ;; Finally - a minimap for emacs!
 ;; -----
 ;(require 'minimap)
@@ -486,3 +460,42 @@
   )
 
 ;(add-hook 'after-init-hook 'irc-maybe)
+
+;; -----
+;; Magic Jedi Python stuff
+;; -----
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
+;; -----
+;; Cool file tree view 
+;; -----
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
+;; -----
+;; Restore frame layout and open buffers
+;; -----
+(require 'windows)
+(require 'revive)
+(win:startup-with-window)
+
+(autoload 'save-current-configuration "revive" "Save status" t)
+(autoload 'resume "revive" "Resume Emacs" t)
+(autoload 'wipe "revive" "Wipe Emacs" t)
+
+; This is needed to avoid that the save-history buffer is revived as well
+(setq revive:ignore-buffer-pattern "^\\( \\*\\)\\|\\(\\.emacs-histories\\)")
+
+; Save on exit
+(add-hook 'kill-emacs-hook 'save-current-configuration)
+
+; When loaded, see if the config file exists and restores the session
+(add-hook 'after-init-hook
+  (if (file-exists-p revive:configuration-file)
+      (let ()
+        (resume)
+        (add-hook 'kill-emacs-hook 'save-current-configuration)
+		)
+	)
+)

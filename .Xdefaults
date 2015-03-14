@@ -17,7 +17,7 @@ URxvt*color11:	#fff796
 URxvt*color9:	#cf6171
 URxvt*color8:	#666666
 URxvt.fading:	15
-URxvt.shading:	18
+URxvt.shading:	15
 URxvt*color2:	#173100
 URxvt*color1:	#9e1828
 URxvt*termName:	xterm
@@ -26,6 +26,7 @@ URxvt*color14:	#aaa
 URxvt*color5:	#963c59
 URxvt.pointerColor:	black
 URxvt.perl-ext-common:	default,matcher,tabbed
+URxvt.urlLauncher: /usr/bin/firefox
 URxvt.inheritPixmap:	true
 URxvt*color3:	#968a38
 URxvt.fadeColor:	black
