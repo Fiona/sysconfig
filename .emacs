@@ -144,7 +144,6 @@
       (cons '("\\.css\\'" . css-mode) auto-mode-alist))
 
 
-
 ; ------------
 ; TADS3 mode
 ; ------------
@@ -153,6 +152,20 @@
 ;(setq auto-mode-alist
 
 
+; ------------
+; C# Mode
+; ------------
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+;(setq auto-mode-alist
+;      (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+(add-hook 'csharp-mode-hook '(lambda () (interactive)
+                               (omnisharp-mode)
+                               (company-mode)
+                               (flycheck-mode)
+                               (local-set-key (kbd "M-.") 'omnisharp-go-to-definition)
+                               ))
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-omnisharp))
 
 
 ;; ------------------------------------------------------------------------------------
@@ -215,24 +228,24 @@
 ;; -----
 ;; YASnippet
 ;; -----
-(require 'yasnippet)
-(yas/initialize)
-(yas/load-directory "~/elisp/snippets/")
+;(require 'yasnippet)
+;(yas/initialize)
+;(yas/load-directory "~/elisp/snippets/")
 
 ;; -----
 ;; Auto complete
 ;; -----
-(when (require 'auto-complete nil t)
-  (require 'auto-complete-yasnippet)
-  (global-auto-complete-mode t)
-
-  (set-face-background 'ac-candidate-face "lightgray")
-  (set-face-underline 'ac-candidate-face "darkgray")
-  (set-face-background 'ac-selection-face "steelblue")
-
-  (setq ac-dwim t)
-  (set-default 'ac-sources '(ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
-)
+;(when (require 'auto-complete nil t)
+;  (require 'auto-complete-yasnippet)
+;  (global-auto-complete-mode t)
+;
+;  (set-face-background 'ac-candidate-face "lightgray")
+;  (set-face-underline 'ac-candidate-face "darkgray")
+;  (set-face-background 'ac-selection-face "steelblue")
+;
+;  (setq ac-dwim t)
+;  (set-default 'ac-sources '(ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
+;)
 
 
 ;; ------------------------------------------------------------------------------------
@@ -345,12 +358,12 @@
 ;; -----
 ;; Reconfigure keys
 ;; -----
-(global-set-key (kbd "M-]") 'dabbrev-expand)
+;(global-set-key (kbd "M-]") 'dabbrev-expand)
 (define-key global-map [f12] 'kill-buffer)
 ;(global-set-key (kbd "f12") 'kill-buffer)
-(global-set-key (kbd "M-'") 'flymake-display-err-menu-for-current-line)
-(global-set-key (kbd "M-a") 'auto-flymake-goto-prev-error)
-(global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
+;(global-set-key (kbd "M-'") 'flymake-display-err-menu-for-current-line)
+;(global-set-key (kbd "M-a") 'auto-flymake-goto-prev-error)
+;(global-set-key (kbd "M-o") 'auto-flymake-goto-next-error)
 ;(global-set-key (kbd "C-x C-g") 'magit-status)
 
 ;(define-key global-map [f1] 'minimap-create)
@@ -387,20 +400,8 @@
 ;; This enhances tags by searching up the current directory for a tags file so
 ;; the tags file searched in is generally the current project open.
 ;; -----
-(require 'etags-table)
-(setq etags-table-search-up-depth 7)
-
-;; -----
-;; This function will just let me create tags easily
-;; -----
-(defun php-create-tags (dir-name)
-  "Create tags file."
-  (interactive "DDirectory: ")
-  (eshell-command
-   (format "find '%s' -type f -name \"*.php\" | etags - " dir-name)))
-
-(global-set-key (kbd "M->") 'php-create-tags)
-
+;(require 'etags-table)
+;(setq etags-table-search-up-depth 7)
 
 
 ;; -----
@@ -414,8 +415,8 @@
 ;; -----
 ;; Neat tree view
 ;; ----
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+;(require 'neotree)
+;(global-set-key [f8] 'neotree-toggle)
 
 
 ;; Standard Jedi.el setting
