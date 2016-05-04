@@ -48,6 +48,17 @@ terminal = "urxvt"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
+-- Do different things depending on hostname
+hostname = io.popen("uname -n"):read()
+laptops = {"deimos"}
+is_laptop = false
+for _,v in pairs(laptops) do
+  if v == hostname then
+    is_laptop = true
+    break
+  end
+end
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -172,6 +183,9 @@ mytasklist.buttons = awful.util.table.join(
 separator = wibox.widget.textbox()
 separator:set_markup("<b> :: </b>")
 
+battery_widget = wibox.widget.textbox()
+battery_widget:set_align("right")
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -205,6 +219,10 @@ for s = 1, screen.count() do
     right_layout:add(separator)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
+    if is_laptop then
+        right_layout:add(separator)
+        right_layout:add(battery_widget)
+    end
     right_layout:add(separator)
     right_layout:add(mylayoutbox[s])
 
@@ -471,3 +489,55 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+
+-- Battery indicator
+function batteryInfo(adapter)
+    spacer = " "
+    local fcur = io.open("/sys/class/power_supply/"..adapter.."/charge_now")    
+    local fcap = io.open("/sys/class/power_supply/"..adapter.."/charge_full")
+    local fsta = io.open("/sys/class/power_supply/"..adapter.."/status")
+    local cur = fcur:read()
+    local cap = fcap:read()
+    local sta = fsta:read()
+    local battery = math.floor(cur * 100 / cap)
+    if sta:match("Charging") then
+        dir = "^"
+        battery = "A/C ("..battery..")"
+    elseif sta:match("Discharging") then
+        dir = "v"
+        if tonumber(battery) > 25 and tonumber(battery) < 75 then
+            battery = battery
+        elseif tonumber(battery) < 25 then
+            if tonumber(battery) < 10 then
+                naughty.notify({ title      = "Battery Warning"
+                               , text       = "Battery low!"..spacer..battery.."%"..spacer.."left!"
+                               , timeout    = 5
+                               , position   = "top_right"
+                               , fg         = beautiful.fg_focus
+                               , bg         = beautiful.bg_focus
+                               })
+            end
+            battery = battery
+        else
+            battery = battery
+        end
+    else
+        dir = "="
+        battery = "A/C"
+    end
+    battery_widget:set_markup(spacer.."Bat:"..spacer..battery.."%"..spacer)
+    fcur:close()
+    fcap:close()
+    fsta:close()
+end
+
+if is_laptop then
+    battery = "BAT0"
+    batteryInfo(battery)
+    battery_timer = timer({timeout = 20})
+    battery_timer:connect_signal("timeout", function()
+        batteryInfo(battery)
+    end)
+    battery_timer:start()
+end
