@@ -2,7 +2,6 @@
 (add-to-list 'load-path "~/elisp/mmm-mode")
 (add-to-list 'load-path "~/elisp/icicles")
 (add-to-list 'load-path "~/elisp/erc")
-(add-to-list 'load-path "~/elisp/neotree")
 
 
 
@@ -375,24 +374,11 @@
 (define-key global-map [f10] 'org-clock-in)
 (define-key global-map [f11] 'org-clock-out)
 
-; Remapping arrow keys
-;(global-unset-key "\C-h")
-;(global-set-key (kbd "C-h") 'backward-char)
-;(global-set-key (kbd "C-n") 'forward-char)
-;(global-set-key (kbd "C-c") 'previous-line)
-;(global-set-key (kbd "C-t") 'next-line)
-
-; Home + end keys
-;(global-set-key (kbd "C-g") 'move-beginning-of-line)
-;(global-set-key (kbd "C-r") 'move-end-of-line)
-
-; pgup + pgdown keys
-;(global-set-key (kbd "C-l") 'cua-scroll-down)
-;(global-set-key (kbd "C-s") 'cua-scroll-up)
-
-; Insert + delete keys
-;(global-set-key (kbd "C-f") 'overwrite-mode)
-;(global-set-key (kbd "C-d") 'delete-char)
+; Resize window keys
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
 
 (require 'dired+)
 
@@ -469,9 +455,8 @@
 (setq jedi:complete-on-dot t)
 
 ;; -----
-;; Cool file tree view 
+;; Cool file tree view
 ;; -----
-(require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
 ;; -----
