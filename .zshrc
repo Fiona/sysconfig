@@ -25,6 +25,9 @@ bindkey '\e[3~' delete-char
 #################
 alias ls='ls --color=auto'
 alias ack='ack-grep'
+alias rmbadsteamlibs='find ~/.steam/root/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
+alias rmbadsteamlibslocal='find ~/.local/share/Steam/ \( -name "libgcc_s.so*" -o -name "libstdc++.so*" -o -name "libxcb.so*" \) -print -delete'
+alias steamfixdrierror='find ~/.steam/root/ -name "libgpg-error.so*" -print -delete'
 
 #################
 ## Load prompt theme
@@ -58,3 +61,5 @@ alias em='emacsclient -nc -a ""'
 alias emc='emacsclient -t -a ""'
 EDITOR='emacsclient -a ""'
 export ALTERNATE_EDITOR=""
+
+
