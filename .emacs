@@ -2,7 +2,10 @@
 (add-to-list 'load-path "~/elisp/mmm-mode")
 (add-to-list 'load-path "~/elisp/icicles")
 (add-to-list 'load-path "~/elisp/erc")
-
+(add-to-list 'load-path "~/elisp/omnisharp")
+(add-to-list 'load-path "~/elisp/flycheck")
+(add-to-list 'load-path "~/elisp/seq")
+(package-initialize)
 
 
 ; ------------------------------------------------------------------------------------
@@ -154,6 +157,8 @@
 ; ------------
 ; C# Mode
 ; ------------
+(require 'omnisharp)
+
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 ;(setq auto-mode-alist
 ;      (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
