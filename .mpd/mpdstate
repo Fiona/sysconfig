@@ -1,0 +1,83 @@
+sw_volume: 100
+audio_device_state:1:pulse audio
+audio_device_state:1:my_fifo
+state: pause
+current: 59
+time: 229.436000
+random: 0
+repeat: 0
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Stromkern/Light It Up (2005)/01 - Stromkern - Televised.mp3
+1:Stromkern/Light It Up (2005)/02 - Stromkern - Reminders.mp3
+2:Stromkern/Light It Up (2005)/03 - Stromkern - Slow Cascade.mp3
+3:Stromkern/Light It Up (2005)/04 - Stromkern - Forgiven.mp3
+4:Stromkern/Light It Up (2005)/05 - Stromkern - The Debate.mp3
+5:Stromkern/Light It Up (2005)/06 - Stromkern - Ruin.mp3
+6:Stromkern/Light It Up (2005)/07 - Stromkern - Sentinel.mp3
+7:Stromkern/Light It Up (2005)/08 - Stromkern - Stand Up.mp3
+8:Stromkern/Light It Up (2005)/09 - Stromkern - Hindsight.mp3
+9:Stromkern/Light It Up (2005)/10 - Stromkern - Delete.mp3
+10:Gaping Chasm/Fragments Of War (2006)/01 - Gaping Chasm - Welcome To Europe (Part I And II).mp3
+11:Gaping Chasm/Fragments Of War (2006)/02 - Gaping Chasm - Day D.mp3
+12:Gaping Chasm/Fragments Of War (2006)/03 - Gaping Chasm - The Frontline.mp3
+13:Gaping Chasm/Fragments Of War (2006)/04 - Gaping Chasm - Only Shadows Survive (Re-Animated).mp3
+14:Gaping Chasm/Fragments Of War (2006)/05 - Gaping Chasm - Pulse.mp3
+15:Gaping Chasm/Fragments Of War (2006)/06 - Gaping Chasm - Crossfire (Wired).mp3
+16:Gaping Chasm/Fragments Of War (2006)/07 - Gaping Chasm - Worms.mp3
+17:Gaping Chasm/Fragments Of War (2006)/08 - Gaping Chasm - To Be Free.mp3
+18:Gaping Chasm/Fragments Of War (2006)/09 - Gaping Chasm - Another Day On Paradise.mp3
+19:Gaping Chasm/Fragments Of War (2006)/10 - Gaping Chasm - Reflection.mp3
+20:Gaping Chasm/Fragments Of War (2006)/11 - Gaping Chasm - To Be Free (Remix).mp3
+21:Gary Numan/Splinter (2013)/01 - I Am Dust.mp3
+22:Gary Numan/Splinter (2013)/02 - Here in the Black.mp3
+23:Gary Numan/Splinter (2013)/03 - Everything Comes Down to This.mp3
+24:Gary Numan/Splinter (2013)/04 - The Calling.mp3
+25:Gary Numan/Splinter (2013)/05 - Splinter.mp3
+26:Gary Numan/Splinter (2013)/06 - Lost.mp3
+27:Gary Numan/Splinter (2013)/07 - Love Hurt Bleed.mp3
+28:Gary Numan/Splinter (2013)/08 - A Shadow Falls On Me.mp3
+29:Gary Numan/Splinter (2013)/09 - Where I Can Never Be.mp3
+30:Gary Numan/Splinter (2013)/10 - We're the Unforgiven.mp3
+31:Gary Numan/Splinter (2013)/11 - Who Are You.mp3
+32:Gary Numan/Splinter (2013)/12 - My Last Day.mp3
+33:Suicide Commando/Bind, Torture, Kill (2006)/01 - Suicide Commando - Bind Torture Kill.mp3
+34:Suicide Commando/Bind, Torture, Kill (2006)/02 - Suicide Commando - Bleed For Us All.mp3
+35:Suicide Commando/Bind, Torture, Kill (2006)/03 - Suicide Commando - Conspiracy With The Devil.mp3
+36:Suicide Commando/Bind, Torture, Kill (2006)/04 - Suicide Commando - Menschenfresser (Eat Me).mp3
+37:Suicide Commando/Bind, Torture, Kill (2006)/05 - Suicide Commando - Dead March.mp3
+38:Suicide Commando/Bind, Torture, Kill (2006)/06 - Suicide Commando - Massaker.mp3
+39:Suicide Commando/Bind, Torture, Kill (2006)/07 - Suicide Commando - Torment Me.mp3
+40:Suicide Commando/Bind, Torture, Kill (2006)/08 - Suicide Commando - Godsend (Deceased Part II).mp3
+41:Suicide Commando/Bind, Torture, Kill (2006)/09 - Suicide Commando - We Are The Sinners.mp3
+42:Suicide Commando/Bind, Torture, Kill (2006)/10 - Suicide Commando - F You Bitch.mp3
+43:Suicide Commando/Bind, Torture, Kill (2006)/11 - Suicide Commando - Rader.mp3
+44:Various Artists/BeatCancerv3/CD2/01 - Frequenze Of Noize - Civilisation Of Noize (C-Lekktor Remix).flac
+45:Various Artists/BeatCancerv3/CD2/02 - Syd.31 - Disorder (Petrol Bastard Remix).flac
+46:Various Artists/BeatCancerv3/CD2/03 - Neonsol - Fascination Street.flac
+47:Various Artists/BeatCancerv3/CD2/04 - Cease2xist - This Is My Design (Crowns Of Bone Remix).flac
+48:Various Artists/BeatCancerv3/CD2/05 - Machine Rox - Zombie DJ Super Freak (BeatCancer Exclusive Remix).flac
+49:Various Artists/BeatCancerv3/CD2/06 - Ruinizer - Technoprisoners (D.E.P. Remix).flac
+50:Various Artists/BeatCancerv3/CD2/07 - Dirty K - Psuedoephedrine.flac
+51:Various Artists/BeatCancerv3/CD2/08 - Hasswut - Machinenwelt.flac
+52:Various Artists/BeatCancerv3/CD2/09 - Defeat - Goodbye (D.E.P. Remix).flac
+53:Various Artists/BeatCancerv3/CD2/10 - V2A - Hail Hydra.flac
+54:Various Artists/BeatCancerv3/CD2/11 - Cloudspires - Guardians of Time.flac
+55:Various Artists/BeatCancerv3/CD2/12 - Spawn Of Psychosis - Shadows.flac
+56:Various Artists/BeatCancerv3/CD3/01 - Bitman - Do You Feel Love.flac
+57:Various Artists/BeatCancerv3/CD3/02 - Mixe1 - This Time (BeatCancer Remix).flac
+58:Various Artists/BeatCancerv3/CD3/03 - Cortex Defect - Affliction (Corroded Master Remix).flac
+59:Various Artists/BeatCancerv3/CD3/04 - Ctrl Alt Del - We Stand Alone.flac
+60:Various Artists/BeatCancerv3/CD3/05 - Big Fucking Robots - Machine Control.flac
+61:Various Artists/BeatCancerv3/CD3/06 - Tapewyrm - Ascendancy.flac
+62:Various Artists/BeatCancerv3/CD3/07 - Death Valley Scars - Skeletor Is Watching You!(No More Fuckin Skeletons Mix).flac
+63:Various Artists/BeatCancerv3/CD3/08 - BenjaminsPlague - The Fast Defeating Process (Out Of Time Remix).flac
+64:Various Artists/BeatCancerv3/CD3/09 - Nature Of Wires - Negative Resolutions.flac
+65:Various Artists/BeatCancerv3/CD3/10 - Injustrial - Nurse Redheart.flac
+66:Various Artists/BeatCancerv3/CD3/11 - Shadows And Mirrors - In The Dark.flac
+67:Various Artists/BeatCancerv3/CD3/12 - Jet Noir - Till The Bitter End (Jeremiah Saint Maxi Mix).flac
+playlist_end
