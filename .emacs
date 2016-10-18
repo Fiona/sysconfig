@@ -2,9 +2,14 @@
 (add-to-list 'load-path "~/elisp/mmm-mode")
 (add-to-list 'load-path "~/elisp/icicles")
 (add-to-list 'load-path "~/elisp/erc")
-(add-to-list 'load-path "~/elisp/omnisharp")
 (add-to-list 'load-path "~/elisp/flycheck")
 (add-to-list 'load-path "~/elisp/seq")
+
+; MELPA and packages
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
 ; Compatability with newer versions of emacs
@@ -25,6 +30,9 @@
  '(delete-active-region nil)
  '(frame-background-mode (quote dark))
  '(imenu-auto-rescan t)
+ '(package-selected-packages
+   (quote
+    (csharp-mode sass-mode omnisharp neotree flycheck-color-mode-line company-jedi)))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -180,6 +188,11 @@
 (setq-default indent-tabs-mode nil)
 
 ;; -----
+;; Make switch/cases indent correctly
+;; -----
+(c-set-offset 'case-label '+)
+
+;; -----
 ;; disable backup
 ;; -----
 (setq backup-inhibited t)
@@ -205,6 +218,11 @@
 ;; Change 'yes' or 'no' to y/n
 ;; -----
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; -----
+;; I've decided I want case insensitive searching
+;; -----
+(setq case-fold-search t)
 
 ;; -----
 ;; File browser
